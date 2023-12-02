@@ -1,0 +1,12 @@
+client/public/
+client/node_modules
+.eslintrc
+package-lock.json
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
