@@ -30,6 +30,7 @@ APIs : "ExerciceDB" de [Justin Mozley](https://rapidapi.com/user/justin-WFnsXH_t
 Pour lancer l'appli, il vous faut écrire `npm run dev` dans le dossier de cette dernière.
 ```
 cd client
+npm i
 npm run dev
 ```
 Une fois les commandes exécutées, l'application s'ouvrira par défaut à l'adresse [http://localhost:5173].
