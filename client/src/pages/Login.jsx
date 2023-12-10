@@ -2,9 +2,13 @@ import { Label } from '@mui/icons-material'
 import { Button, Input, Stack, Link, Typography } from '@mui/material'
 import React, { useState } from 'react'
 
+import show from '../assets/icons/show.png'
+import hide from '../assets/icons/hide.png'
+
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -12,40 +16,56 @@ const Login = () => {
     }
 
     return (
-        <Stack alignItems="center" mt="37px"
-        justifyContent="center" p="20px">
+        <Stack p="64px" sx={{ backgroundColor: "#F6F4EB", width: { lg: "25%", xs: "50%" }, height: "700px", marginLeft: { lg: "40%", xs: "28%" }, marginBottom: { lg: "10%", xs: "20%" }, marginTop: "5%" }}>
+
             <form>
-                <Label for="email">email</Label>
+
                 <Input type='email' placeholder='type your email' id="email" name="email"
                     onChange={(e) => {
                         setEmail(e.target.value);
+                    }} sx={{
+                        width: "100%", marginTop: "64px", fontFamily: "Spartan",
+                        fontSize: { lg: '3Opx', xs: '24px' },
                     }} />
+
                 <br></br>
-                <Label for="password">password</Label>
-                <Input type='password' placeholder='type your password' id="password" name="password"
-                    onChange={(e) => {
-                        setPassword(e.target.value);
-                    }} />
-                <Button className="search-btn"
-                    sx={{
-                        bgcolor: '#F4C111',
-                        color: '#000',
-                        textTransform: 'none',
-                        width: { lg: '175px', xs: '80px' },
-                        fontSize: { lg: '2Opx', xs: '14px' },
-                        height: '54px',
-                        position: "absolute",
-                    }}
+
+                <Stack direction="row">
+                    <Input type={showPassword ? "text" : "password"} placeholder='type your password' id="password" name="password"
+                        onChange={(e) => {
+                            setPassword(e.target.value);
+                        }} sx={{
+                            width: "100%", marginTop: "64px", fontFamily: "Spartan",
+                            fontSize: { lg: '3Opx', xs: '24px' },
+                        }} />
+
+                    <Button sx={{ height: "20px", marginTop: "72px" }} onClick={() => { setShowPassword((prev) => !prev) }}><img src={showPassword ? show : hide} /></Button>
+                </Stack>
+
+                <Button sx={{
+                    marginTop: "212px",
+                    bgcolor: '#4682A9',
+                    color: '#000',
+                    textTransform: 'none',
+                    width: "160px",
+                    fontWeight: "700",
+                    fontFamily: "Spartan",
+                    fontSize: { lg: '3Opx', xs: '24px' },
+                    height: '54px',
+                    width: "100%",
+                }}
                     onClick={(e) => {
 
                         handleSubmit(e);
                     }}>
-                    Search
+                    Log In
                 </Button>
+
             </form>
+
             <Link underline="none" color="ButtonHighlight" style={{ textDecoration: 'none', color: '#000000', fontSize: "12px", fontWeight: "700" }}>
-        <Typography>No account ? <a href='signup'>Sign up</a></Typography>
-        </Link>
+                <Typography>No account ? <a href='signup'>Sign up</a></Typography>
+            </Link>
 
         </Stack>
     )

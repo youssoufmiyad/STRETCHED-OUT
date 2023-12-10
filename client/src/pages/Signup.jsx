@@ -1,27 +1,29 @@
 import { Label } from '@mui/icons-material'
 import { Button, Input, Stack, Link, Typography } from '@mui/material'
 import React, { useState, useRef, useEffect } from 'react'
-import { faCheck, faTimes, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const USER_REGEX = /^[A-z][A-z0-9.-_]+@[A-Za-z0-9.-]{1,23}$/;
+import show from '../assets/icons/show.png'
+import hide from '../assets/icons/hide.png'
+
+const USER_REGEX = /^[a-z0-9_-]{3,15}$/
+const EMAIL_REGEX = /^[A-z][A-z0-9.-_]+@[A-Za-z0-9.-]{1,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
 
 const Signup = () => {
     const userRef = useRef();
-    const errRef = useRef();
 
-    const [user, setUser] = useState('');
-    const [validName, setValidName] = useState(false);
-    const [userFocus, setUserFocus] = useState(false);
+    const [username, setUsername] = useState('');
+    const [validUsername, setValidUsername] = useState(false);
+
+    const [email, setEmail] = useState('');
+    const [validEmail, setValidEmail] = useState(false);
 
     const [password, setPassword] = useState('');
     const [validPassword, setValidPassword] = useState(false);
-    const [passwordFocus, setPasswordFocus] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const [matchPwd, setMatchPwd] = useState("");
     const [validMatch, setValidMatch] = useState(false);
-    const [matchFocus, setMatchFocus] = useState(false);
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
@@ -32,9 +34,14 @@ const Signup = () => {
     }, [])
 
     useEffect(() => {
-        setValidName(USER_REGEX.test(user));
-        console.log(`is ${user} valid: ${validName}`)
-    }, [user])
+        setValidUsername(USER_REGEX.test(username));
+        console.log(`is ${username} valid: ${validUsername}`)
+    }, [username])
+
+    useEffect(() => {
+        setValidEmail(EMAIL_REGEX.test(email));
+        console.log(`is ${email} valid: ${validEmail}`)
+    }, [email])
 
     useEffect(() => {
         setValidPassword(PWD_REGEX.test(password));
@@ -48,37 +55,40 @@ const Signup = () => {
 
     useEffect(() => {
         setErrMsg('');
-    }, [user, password, matchPwd])
+    }, [email, password, matchPwd])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         // if button enabled with JS hack
-        const v1 = USER_REGEX.test(user);
+        const v1 = EMAIL_REGEX.test(email);
         const v2 = PWD_REGEX.test(password);
+        const v3 = USER_REGEX.test(username);
+        console.log(`test mail ${v1} test pwd ${v2} test user ${v3}`)
         if (!v1 || !v2 || !validMatch) {
             setErrMsg("Invalid Entry");
+            console.log(errMsg)
             return;
         }
 
-        console.log(`user = ${user} pwd = ${password}`)
+        console.log(`user = ${email} pwd = ${password}`)
         console.log("data transmission starts...")
 
         // When a post request is sent to the create url, we'll add a new account to the database.
-        const newPerson = { Username:user,Password:password };
-        await fetch("http://localhost:5000/accounts/add", {
+        const newPerson = { email: email, username: username, password: password };
+        console.log(JSON.stringify(newPerson))
+        await fetch(process.env.API_URL, {
+            mode: "no-cors",
+            cache: "no-cache",
             method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
             body: JSON.stringify(newPerson),
         })
             .catch(error => {
                 window.alert(error);
-                return;
             });
 
         setSuccess(true)
-        console.log("success : ",success)
+        console.log("success : ", success)
     }
 
     return (
@@ -91,102 +101,72 @@ const Signup = () => {
                     </p>
                 </section>
             ) : (
-                <Stack alignItems="center" mt="37px"
-                    justifyContent="center" p="20px">
-                    {/* Error */}
-                    <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live='assertive'>{errMsg}</p>
+                <Stack p="64px" sx={{ backgroundColor: "#F6F4EB", width: { lg: "25%", xs: "50%" }, height: "700px", marginLeft: { lg: "40%", xs: "28%" }, marginBottom: { lg: "10%", xs: "20%" }, marginTop: "5%" }}>
 
-                    <Typography bgcolor='#F4C111'><h1>Sign up</h1></Typography>
-                    <form method="post" onSubmit={(e) => handleSubmit(e)}>
-                        {/* textfield username */}
-                        <Label htmlFor="user">user:
-                            <FontAwesomeIcon icon={faCheck} className={validName ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validName || !user ? "hide" : "invalid"} /></Label>
-                        <Input
-                            type='text'
-                            placeholder='type your username'
-                            id="user"
-                            autoComplete='off'
-                            onChange={(e) => setUser(e.target.value)}
-                            aria-invalid={validName ? "false" : "true"}
-                            aria-describedby='uidnote'
-                            onFocus={() => setUserFocus(true)}
-                            onBlur={() => setUserFocus(false)}
-                            required />
-                        <p id='uidnote' className={userFocus && user && !validName ? "instructions" : "offscreen"}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            4 to 24 characters.<br />
-                            Must be an email
-                        </p>
+                    <form>
 
-                        <br></br>
-
-                        {/*textfield password */}
-                        <Label for="password">password:
-                            <FontAwesomeIcon icon={faCheck} className={validPassword ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validPassword || !password ? "hide" : "invalid"} /></Label>
-                        <Input type='password' placeholder='type your password' id="password" name="password"
+                        <Input type={"text"} placeholder='type your username' id="username" name="username"
                             onChange={(e) => {
-                                setPassword(e.target.value)
-                            }}
-                            aria-invalid={!validPassword ? "false" : "true"}
-                            aria-describedby='pwdnote'
-                            onFocus={() => setUserFocus(true)}
-                            onBlur={() => setUserFocus(false)}
-                            required />
-                        <p id='pwdnote' className={passwordFocus && !validPassword ? "instructions" : "offscreen"}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            8 to 24 characters.<br />
-                            Must include letters (uppercase/lowercase) and a number
-                        </p>
+                                setUsername(e.target.value);
+                            }} sx={{
+                                width: "100%", marginTop: "64px", fontFamily: "Spartan",
+                                fontSize: { lg: '3Opx', xs: '24px' },
+                            }} />
 
-                        <br></br>
-
-                        {/* textfield password check */}
-                        <Label for="confirmPassword">confirm your password:
-                            <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
-                            <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} /></Label>
-                        <Input
-                            type='password'
-                            placeholder='retype your password'
-                            id="confirmPassword"
-                            name="confirmPassword"
+                        <Input type='email' placeholder='type your email' id="email" name="email"
                             onChange={(e) => {
-                                setMatchPwd(e.target.value)
-                            }}
-                            aria-invalid={validMatch ? "false" : "true"}
-                            aria-describedby='confirmPasswordNote'
-                            onFocus={() => setUserFocus(true)}
-                            onBlur={() => setUserFocus(false)}
-                            required />
-                        <p id='confirmPasswordNote' className={matchFocus && !validMatch ? "instructions" : "offscreen"}>
-                            <FontAwesomeIcon icon={faInfoCircle} />
-                            Must be the same as the previous input<br />
-                        </p>
+                                setEmail(e.target.value);
+                            }} sx={{
+                                width: "100%", marginTop: "64px", fontFamily: "Spartan",
+                                fontSize: { lg: '3Opx', xs: '24px' },
+                            }} />
 
+                        <Stack direction="row">
+                            <Input type={showPassword ? "text" : "password"} placeholder='type your password' id="password" name="password"
+                                onChange={(e) => {
+                                    setPassword(e.target.value);
+                                }} sx={{
+                                    width: "100%", marginTop: "64px", fontFamily: "Spartan",
+                                    fontSize: { lg: '3Opx', xs: '24px' },
+                                }} />
 
-                        {/* Submit button */}
-                        <Button type='submit'
-                            disabled={!validName || !validPassword || !validMatch ? true : false}
-                            className="search-btn"
-                            sx={{
-                                bgcolor: '#F4C111',
-                                color: '#000',
-                                textTransform: 'none',
-                                width: { lg: '175px', xs: '80px' },
-                                fontSize: { lg: '2Opx', xs: '14px' },
-                                height: '54px',
-                                position: "absolute",
-                            }}
-                        >
-                            Confirm
+                            <Button sx={{ height: "20px", marginTop: "72px" }} onClick={() => { setShowPassword((prev) => !prev) }}><img src={showPassword ? show : hide} /></Button>
+                        </Stack>
+
+                        <Input type={showPassword ? "text" : "password"} placeholder='confirm your password' id="password" name="password"
+                            onChange={(e) => {
+                                setMatchPwd(e.target.value);
+                            }} sx={{
+                                width: "100%", marginTop: "64px", fontFamily: "Spartan",
+                                fontSize: { lg: '3Opx', xs: '24px' },
+                            }} />
+
+                        <Button sx={{
+                            marginTop: "120px",
+                            bgcolor: '#4682A9',
+                            color: '#000',
+                            textTransform: 'none',
+                            width: "160px",
+                            fontWeight: "700",
+                            fontFamily: "Spartan",
+                            fontSize: { lg: '3Opx', xs: '24px' },
+                            height: '54px',
+                            width: "100%",
+                        }}
+                            onClick={(e) => {
+
+                                handleSubmit(e);
+                            }}>
+                            Log In
                         </Button>
 
-                    </form><Link marginTop="" underline="none" color="ButtonHighlight" style={{ textDecoration: 'none', color: '#000000', fontSize: "12px", fontWeight: "700" }}>
-                        <Typography>Already have an account ? <a href='login'>Log in</a></Typography>
+                    </form>
+
+                    <Link underline="none" color="ButtonHighlight" style={{ textDecoration: 'none', color: '#000000', fontSize: "12px", fontWeight: "700" }}>
+                        <Typography>No account ? <a href='signup'>Sign up</a></Typography>
                     </Link>
 
-                </Stack >
+                </Stack>
             )
             }
         </>
