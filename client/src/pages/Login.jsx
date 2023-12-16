@@ -1,18 +1,44 @@
 import { Label } from '@mui/icons-material'
 import { Button, Input, Stack, Link, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import show from '../assets/icons/show.png'
 import hide from '../assets/icons/hide.png'
+import encrypt from '../utils/encrypt'
+import { fetchUser } from '../utils/fetchData'
 
 const Login = () => {
+    const [users, setUsers] = useState([])
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
+    useEffect(() => {
+        fetchUser(setUsers)
+    })
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("email = " + email + " password = " + password);
+        let userExist = false
+        let actualUser
+        for (let i = 0; i < users.length; i++) {
+            console.log(users[i])
+            if (users[i].email == email) {
+                userExist = true
+                actualUser = users[i]
+            } else if (users[i].username == email) {
+                userExist = true
+                actualUser = users[i]
+            }
+        }
+        userExist ? console.log("user exist") : console.log("user doesn't exist")
+        if (encrypt(password) == actualUser.password) {
+            console.log("correct password")
+        } else {
+            console.log("incorrect password")
+        }
     }
 
     return (

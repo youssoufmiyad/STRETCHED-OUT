@@ -21,3 +21,9 @@ export const fetchData = async (url, options) => {
     const data = await response.json()
     return data;
 }
+
+export const fetchUser = async (setUsers) => {
+    const response = await fetch("http://localhost:3030/STRETCHED-OUT");
+    const userData = await response.json();
+    setUsers(userData)
+}
