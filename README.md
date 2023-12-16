@@ -7,6 +7,7 @@ je la développe à titre éducatif dans mon temps libre (pour l'instant).
 
 ## Stack technique
 > Notez que cette section peut évoluer en fonction des besoins de l'app.
+
 Client : HTML CSS JavaScript (ReactJS, Vite)
 Server : NodeJS, MongoDB
 APIs : "ExerciceDB" de [Justin Mozley](https://rapidapi.com/user/justin-WFnsXH_t6) et "Youtube Search and Download" de [h0p3rwe](https://rapidapi.com/user/h0p3rwe). (Toutes disponibles sur [Rapid API](https://rapidapi.com))
