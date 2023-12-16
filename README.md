@@ -28,6 +28,7 @@ APIs : "ExerciceDB" de [Justin Mozley](https://rapidapi.com/user/justin-WFnsXH_t
 ## Lancement
 > [!NOTE]
 > L'application étant en early stage, je ne l'ai pas encore déployé proprement. C'est prévu.
+
 Pour lancer l'appli, il vous faut écrire `npm run dev` dans le dossier de cette dernière.
 ```
 cd client
