@@ -21,11 +21,13 @@ router.get("/:id", getUser, async (req, res) => {
 // REGISTER
 router.post('/', async (req, res) => {
     const user = new User({
-        email: req.body.email,
         username: req.body.username,
-        password: req.body.password
+        email: req.body.email,
+        password: req.body.password,
     })
-
+    console.log(user.email)
+    console.log(user.username)
+    console.log(user.password)
     try {
         const newUser = await user.save()
         res.status(201).json(newUser)

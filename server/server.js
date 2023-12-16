@@ -12,7 +12,22 @@ const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log("connected to database"))
 
+// authorisation d'utilisation de l'API
+app.use((req, res, next) => {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+    );
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    if (req.method === "OPTIONS") {
+      return res.sendStatus(200);
+    }
+    next();
+  });
+
 // parse application/json
+app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // setup routes

@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react'
 
 import show from '../assets/icons/show.png'
 import hide from '../assets/icons/hide.png'
+import encrypt from '../utils/encrypt'
 
 const USER_REGEX = /^[a-z0-9_-]{3,15}$/
 const EMAIL_REGEX = /^[A-z][A-z0-9.-_]+@[A-Za-z0-9.-]{1,23}$/;
@@ -27,6 +28,17 @@ const Signup = () => {
 
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
+
+    const POSTREQUEST = async () => {
+        let hashPWD = encrypt(password)
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: username, email: email, password: hashPWD })
+        };
+        const response = await fetch('http://localhost:3030/STRETCHED-OUT', requestOptions);
+        return await response.json();
+    }
 
     useEffect(() => {
         if (!userRef.current) { return; }
@@ -73,22 +85,10 @@ const Signup = () => {
 
         console.log(`user = ${email} pwd = ${password}`)
         console.log("data transmission starts...")
-
+        const body = JSON.stringify({ email: email, username: username, password: encrypt(password) })
+        console.log(body)
         // When a post request is sent to the create url, we'll add a new account to the database.
-        const newPerson = { email: email, username: username, password: password };
-        console.log(JSON.stringify(newPerson))
-        await fetch(process.env.API_URL, {
-            mode: "no-cors",
-            cache: "no-cache",
-            method: "POST",
-            body: JSON.stringify(newPerson),
-        })
-            .catch(error => {
-                window.alert(error);
-            });
-
-        setSuccess(true)
-        console.log("success : ", success)
+        POSTREQUEST()
     }
 
     return (
@@ -163,7 +163,7 @@ const Signup = () => {
                     </form>
 
                     <Link underline="none" color="ButtonHighlight" style={{ textDecoration: 'none', color: '#000000', fontSize: "12px", fontWeight: "700" }}>
-                        <Typography>No account ? <a href='signup'>Sign up</a></Typography>
+                        <Typography>No account ? <a href='login'>Sign up</a></Typography>
                     </Link>
 
                 </Stack>
