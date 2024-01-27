@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, Navigate, useLocation, useNavigate, } from "react-router-dom";
 import { Stack } from "@mui/material";
 import Logo from "../assets/images/Logo.png";
-const Navbar = () => {
+const Navbar = ({user}) => {
 	const url = useLocation().pathname;
 	const urlHash = useLocation().hash;
 
@@ -11,8 +11,6 @@ const Navbar = () => {
 	const [pos, setPos] = useState("");
 
 	useEffect(() => {
-		console.log(url);
-		console.log(urlHash);
 		window.addEventListener("scroll", stickNavbar);
 		return () => window.removeEventListener("scroll", stickNavbar);
 	});
@@ -92,7 +90,7 @@ const Navbar = () => {
 					>
 						Exercises
 					</a>
-					<Link
+					{user.username ? <Link
 						to="/login"
 						className={url === "/login" ? "actual-section" : ""}
 						style={{
@@ -104,7 +102,8 @@ const Navbar = () => {
 						}}
 					>
 						Sign in
-					</Link>
+					</Link>:"Connected"}
+					
 				</Stack>
 			</Stack>
 		</Stack>

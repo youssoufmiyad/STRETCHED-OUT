@@ -7,7 +7,7 @@ import hide from "../assets/icons/hide.png";
 import encrypt from "../utils/encrypt";
 import { fetchUser } from "../utils/fetchData";
 
-const Login = () => {
+const Login = ({onLogin}) => {
     const navigate = useNavigate();
 
 	const [users, setUsers] = useState([]);
@@ -38,6 +38,7 @@ const Login = () => {
 		userExist ? console.log("user exist") : console.log("user doesn't exist");
 		if (encrypt(password) === actualUser.password) {
 			console.log("correct password");
+			onLogin(actualUser)
             navigate("/")
 		} else {
 			console.log("incorrect password");

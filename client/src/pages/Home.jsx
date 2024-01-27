@@ -5,13 +5,14 @@ import HeroBanner from '../components/HeroBanner'
 import Exercises from '../components/Exercises'
 import SearchExercises from '../components/SearchExercises'
 
-const Home = () => {
+const Home = ({user}) => {
   const [equipement, setEquipment] = useState('all');
   const [exercises, setExercices] = useState([]);
 
   
   return (
     <Box>
+      <h1>{user.username}</h1>
         <HeroBanner />
         <SearchExercises 
         setExercices={setExercices}
