@@ -8,9 +8,9 @@ je la développe à titre éducatif dans mon temps libre (pour l'instant).
 ## Stack technique
 > Notez que cette section peut évoluer en fonction des besoins de l'app.
 
-Client : HTML CSS JavaScript (ReactJS, Vite)
-Server : NodeJS, MongoDB
-APIs : "ExerciceDB" de [Justin Mozley](https://rapidapi.com/user/justin-WFnsXH_t6) et "Youtube Search and Download" de [h0p3rwe](https://rapidapi.com/user/h0p3rwe). (Toutes disponibles sur [Rapid API](https://rapidapi.com))
+- Client : HTML CSS JavaScript (ReactJS, Vite)
+- Server : NodeJS, MongoDB
+- APIs : "ExerciceDB" de [Justin Mozley](https://rapidapi.com/user/justin-WFnsXH_t6) et "Youtube Search and Download" de [h0p3rwe](https://rapidapi.com/user/h0p3rwe). (Toutes disponibles sur [Rapid API](https://rapidapi.com))
 
 ## Fonctionalités
 :white_check_mark: = opérationel :construction: = en cours :hourglass_flowing_sand: = prévu
@@ -35,7 +35,7 @@ cd client
 npm i
 npm run dev
 ```
-Une fois les commandes exécutées, l'application s'ouvrira par défaut à l'adresse [http://localhost:5173].
+Une fois les commandes exécutées, l'application s'ouvrira par défaut à l'adresse [http://localhost:5173](http://localhost:5173).
 
 ## État du projet
 Le projet est mis à jour tout les week-ends, la checklist de fonctionalités peut évoluer en fonction de mes envies.
