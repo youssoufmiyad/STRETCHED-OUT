@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link, Navigate, useLocation, useNavigate, } from "react-router-dom";
-import { Stack } from "@mui/material";
+
+import { useCookies } from "react-cookie";
+
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Button, Stack } from "@mui/material";
 import Logo from "../assets/images/Logo.png";
-const Navbar = ({user}) => {
+const Navbar = ({ user }) => {
 	const url = useLocation().pathname;
 	const urlHash = useLocation().hash;
-
-    const navigate = useNavigate();
+	const navigate = useNavigate();
+	const [cookies, setCookie] = useCookies(["stretchedUser"]);
 
 	const [pos, setPos] = useState("");
 
@@ -19,7 +22,10 @@ const Navbar = ({user}) => {
 		window.scrollY > 1 ? setPos("fixed") : setPos("");
 	};
 
-	// window.scrollY> 1 ? position: "fixed" : true;
+	const Disconnect = ()=> {
+		setCookie("stretchedUser", "", { path: "/" });
+		window.location.reload();
+	}
 	return (
 		<Stack
 			sx={{
@@ -90,20 +96,35 @@ const Navbar = ({user}) => {
 					>
 						Exercises
 					</a>
-					{user.username ? <Link
-						to="/login"
-						className={url === "/login" ? "actual-section" : ""}
-						style={{
-							textDecoration: "none",
-							color: "#000000",
-							fontSize: "30px",
-							fontWeight: "700",
-							fontFamily: "Spartan",
-						}}
-					>
-						Sign in
-					</Link>:"Connected"}
-					
+					{!user ? (
+						<Link
+							to="/login"
+							className={url === "/login" ? "actual-section" : ""}
+							style={{
+								textDecoration: "none",
+								color: "#000000",
+								fontSize: "30px",
+								fontWeight: "700",
+								fontFamily: "Spartan",
+							}}
+						>
+							Sign in
+						</Link>
+					) : (
+						<Button
+						type="button"
+						onClick={Disconnect}
+							style={{
+								textDecoration: "none",
+								color: "#000000",
+								fontSize: "30px",
+								fontWeight: "700",
+								fontFamily: "Spartan",
+							}}
+						>
+							Disconnect
+						</Button>
+					)}
 				</Stack>
 			</Stack>
 		</Stack>

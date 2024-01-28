@@ -16,15 +16,15 @@ import { CookiesProvider, useCookies } from "react-cookie";
 
 
 const App = () => {
-	const [cookies, setCookie] = useCookies(["stretched-user"]);
+	const [cookies, setCookie] = useCookies(["stretchedUser"]);
 
 	const handleLogin = (user) => {
-		setCookie("stretched-user", user, { path: "/" });
+		setCookie("stretchedUser", user, { path: "/" });
 	};
 
 	return (
 		<Box width="100%s" m="auto">
-			<Navbar user={cookies.user.username}/>
+			{cookies.stretchedUser ? <Navbar user={cookies.stretchedUser.username}/> : <Navbar/>}
 			<Routes>
 				{cookies.user ? (
 					<Route path="/" element={<Home user={cookies.user.username} />} />

@@ -9,10 +9,9 @@ const Home = ({user}) => {
   const [equipement, setEquipment] = useState('all');
   const [exercises, setExercices] = useState([]);
 
-  
   return (
     <Box>
-      <h1>{user.username}</h1>
+      <h1>{user}</h1>
         <HeroBanner />
         <SearchExercises 
         setExercices={setExercices}
