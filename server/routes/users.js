@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var User = require('../models/user');
+const express = require('express');
+const router = express.Router();
+const User = require('../models/user');
 
 // LOGIN
 // GET tout les users puis vérifie la présence de celui du req
@@ -44,6 +44,8 @@ router.patch('/:id', getUser, async (req, res) => {
         res.user.username = req.body.username
     } if (req.body.password != null) {
         res.user.password = req.body.password
+    } if (req.body.routine != null){
+        res.user.routine = req.body.routine
     }
     try {
         const updatedUser = await res.user.save()

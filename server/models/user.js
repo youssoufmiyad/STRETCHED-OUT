@@ -12,7 +12,12 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required: true,
-    }
+    },
+    routine:[{
+        type: Object,
+        required: true,
+        default: []
+    }]
     
 })
 

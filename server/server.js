@@ -31,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 // setup routes
-const router = require("./routes/index")
-app.use("/STRETCHED-OUT",router)
+const router = require("./routes/users")
+app.use("/users",router)
 
-app.listen(process.env.PORT, () => console.log("server started, hosted at http://localhost:"+process.env.PORT))
+app.listen(process.env.PORT, () => console.log(`server started, hosted at http://localhost:${process.env.PORT}`))
