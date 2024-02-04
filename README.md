@@ -19,7 +19,7 @@ je la développe à titre éducatif dans mon temps libre (pour l'instant).
 - Trier en fonction de la partie du corps à entrainer :white_check_mark:
 - Chercher un exercice en particulier :white_check_mark:
 - Représentation graphique des exercices :white_check_mark:
-- Identification / authentification :construction:
+- Identification / authentification :white_check_mark:
 - Composition d'un programme (sauvegardé sur le compte de l'utilisateur) :hourglass_flowing_sand:
 - Redirection vers des vidéos pertinentes pour chaque exercice :white_check_mark:
 - Suivi de l'IMC :hourglass_flowing_sand:
