@@ -23,7 +23,7 @@ export const fetchData = async (url, options) => {
 }
 
 export const fetchUser = async (setUsers) => {
-    const response = await fetch("http://localhost:3000/STRETCHED-OUT");
+    const response = await fetch("http://localhost:3000/users");
     const userData = await response.json();
     setUsers(userData)
 }
