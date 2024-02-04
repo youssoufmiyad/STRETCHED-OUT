@@ -157,6 +157,10 @@ margin-bottom: 0.5rem;
   left: 0;
 }
 
+.actual-section{
+  border-bottom: 4px solid #000;
+}
+
 
 @media screen and (max-width:1200px) {
   .detail-image {
