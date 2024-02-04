@@ -37,7 +37,7 @@ const Detail = ({ exerciseDetail }) => {
                 {extraDetail.map((item) => {
                     <Stack key={item.name} gap="30px" direction={'column'} alignItems={"center"}>
                         <Button sx={{ background: '#FFF2DB', borderRadius: '50%', width: '100px', height: '100px' }}>
-                            <img src={item.icon} />
+                            <img src={item.icon} alt="icon"/>
                         </Button>
                         <Typography textTransform="capitalize" sx={{ fontSize: { lg: '30px', xs: '20px' } }} variant='h5'>
                             {item.name}

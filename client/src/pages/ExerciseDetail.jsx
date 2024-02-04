@@ -6,6 +6,7 @@ import { exerciseOptions, fetchData, videoOptions } from '../utils/fetchData'
 import Detail from '../components/Detail'
 import ExerciseVideos from '../components/ExerciseVideos'
 import SimilarExercises from '../components/SimilarExercises'
+import AddExercise from '../components/AddExercise'
 
 const ExerciseDetail = () => {
   const [exerciseDetail, setExerciseDetail] = useState({});
@@ -39,11 +40,12 @@ const ExerciseDetail = () => {
     fetchExercisesData();
   }, [id]);
 
-  console.log("EQUIPMENT = " + exerciseDetail.equipment);
-  console.log("TARGET = " + exerciseDetail.target);
+  console.log(`EQUIPMENT = ${exerciseDetail.equipment}`);
+  console.log(`TARGET = ${exerciseDetail.target}`);
   return (
     <Box>
       <Detail exerciseDetail={exerciseDetail} />
+      <AddExercise/>
       <ExerciseVideos exerciseVideos={exerciseVideos}
         name={exerciseDetail.name} />
       <SimilarExercises targetMuscleExercises={targetMuscleExercises}
