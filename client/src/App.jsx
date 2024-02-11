@@ -11,9 +11,9 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import NewRoutine from "./pages/NewRoutine";
 
 import { CookiesProvider, useCookies } from "react-cookie";
-
 
 const App = () => {
 	const [cookies, setCookie] = useCookies(["stretchedUser"]);
@@ -24,14 +24,31 @@ const App = () => {
 
 	return (
 		<Box width="100%s" m="auto">
-			{cookies.stretchedUser ? <Navbar user={cookies.stretchedUser.username}/> : <Navbar/>}
+			{cookies.stretchedUser ? (
+				<Navbar user={cookies.stretchedUser.username} />
+			) : (
+				<Navbar />
+			)}
 			<Routes>
-				{cookies.user ? (
-					<Route path="/" element={<Home user={cookies.user.username} />} />
+				{cookies.stretchedUser ? (
+					<>
+						<Route
+							path="/"
+							element={<Home user={cookies.stretchedUser.username} />}
+						/>
+						<Route
+							path="/exercise/:id"
+							element={<ExerciseDetail user={cookies.stretchedUser.username} />}
+						/>
+					</>
 				) : (
-					<Route path="/" element={<Home />} />
+					<>
+						<Route path="/" element={<Home />} />
+						<Route path="/exercise/:id" element={<ExerciseDetail />} />
+					</>
 				)}
-				<Route path="/exercise/:id" element={<ExerciseDetail />} />
+
+				<Route path="/new-routine" element={<NewRoutine />} />
 				<Route path="/login" element={<Login onLogin={handleLogin} />} />
 				<Route path="/signup" element={<Signup />} />
 			</Routes>

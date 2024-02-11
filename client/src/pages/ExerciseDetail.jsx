@@ -8,7 +8,7 @@ import ExerciseVideos from '../components/ExerciseVideos'
 import SimilarExercises from '../components/SimilarExercises'
 import AddExercise from '../components/AddExercise'
 
-const ExerciseDetail = () => {
+const ExerciseDetail = ({user}) => {
   const [exerciseDetail, setExerciseDetail] = useState({});
   const [exerciseVideos, setExerciseVideos] = useState([]);
   const [targetMuscleExercises, setTargetMuscleExercises] = useState([]);
@@ -45,7 +45,8 @@ const ExerciseDetail = () => {
   return (
     <Box>
       <Detail exerciseDetail={exerciseDetail} />
-      <AddExercise/>
+      {user ? <AddExercise/> : ""}
+      
       <ExerciseVideos exerciseVideos={exerciseVideos}
         name={exerciseDetail.name} />
       <SimilarExercises targetMuscleExercises={targetMuscleExercises}
