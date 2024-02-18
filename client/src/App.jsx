@@ -34,11 +34,11 @@ const App = () => {
 					<>
 						<Route
 							path="/"
-							element={<Home user={cookies.stretchedUser.username} />}
+							element={<Home user={cookies.stretchedUser} />}
 						/>
 						<Route
 							path="/exercise/:id"
-							element={<ExerciseDetail user={cookies.stretchedUser.username} />}
+							element={<ExerciseDetail user={cookies.stretchedUser} />}
 						/>
 					</>
 				) : (
@@ -48,7 +48,7 @@ const App = () => {
 					</>
 				)}
 
-				<Route path="/new-routine" element={<NewRoutine />} />
+				<Route path="/new-routine" element={<NewRoutine user={cookies.stretchedUser}/>} />
 				<Route path="/login" element={<Login onLogin={handleLogin} />} />
 				<Route path="/signup" element={<Signup />} />
 			</Routes>

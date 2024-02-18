@@ -11,8 +11,7 @@ const Home = ({user}) => {
 
   return (
     <Box>
-      <h1>{user}</h1>
-        <HeroBanner />
+        <HeroBanner user={user.username} />
         <SearchExercises 
         setExercices={setExercices}
         equipment={equipement}

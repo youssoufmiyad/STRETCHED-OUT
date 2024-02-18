@@ -43,7 +43,7 @@ const Signup = () => {
 			}),
 		};
 		const response = await fetch(
-			"http://localhost:3000/STRETCHED-OUT",
+			"http://localhost:3000/users",
 			requestOptions,
 		);
 		return await response.json();
