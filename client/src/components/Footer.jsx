@@ -11,11 +11,11 @@ const Footer = () => {
 
       <Stack direction={'row'}>
         <Link href="https://www.linkedin.com/in/miyad-youssouf-ali-1ba879289" underline="none" color="ButtonHighlight" style={{ textDecoration: 'none', color: '#000000', fontSize: "12px", fontWeight: "700" }}>
-          <img width={"80px"} height={"80px"} src={linkedin} />
+          <img width={"80px"} height={"80px"} src={linkedin} alt="linkedin" />
         </Link>
 
         <Link href="https://github.com/youssoufmiyad" underline="none" color="ButtonHighlight" style={{ textDecoration: 'none', color: '#000000', fontSize: "12px", fontWeight: "700" }}>
-          <img width={"80px"} height={"80px"} src={github} />
+          <img width={"80px"} height={"80px"} src={github} alt="github" />
         </Link>
       </Stack>
     </Stack>

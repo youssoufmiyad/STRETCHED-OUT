@@ -35,7 +35,7 @@ const Exercises = ({ exercises, setExercices, equipment }) => {
     }
 
     fetchExercisesData();
-  }, [equipment]);
+  }, [equipment,setExercices]);
 
   return (
     <Box id="exercises"
@@ -54,7 +54,7 @@ const Exercises = ({ exercises, setExercices, equipment }) => {
 
         <ScrollMenu>
         {currentExercises.map((exercise, idx) => (
-          <ExerciseCard key={idx} exercise={exercise} />
+          <ExerciseCard exercise={exercise} />
         ))}
         </ScrollMenu>
         <Stack>

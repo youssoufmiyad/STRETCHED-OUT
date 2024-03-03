@@ -5,10 +5,10 @@ import ExerciseCard from './ExerciseCard';
 import YoutubeWindow from './YoutubeWindow';
 
 const ExerciseVideos = ({ exerciseVideos, name }) => {
-    if (exerciseVideos == "") {
+    if (exerciseVideos === "") {
         console.log("canceled");
         return <Loader />;
-    } else {
+    }
         return (
             <Box sx={{ mt: { lg: '20px', xs: '20px' } }} p="20px">
                 <Typography sx={{ fontSize: { lg: '44px', xs: '25px' } ,fontFamily: "Spartan"}} fontWeight={700} color="#000" mb="33px">
@@ -21,7 +21,6 @@ const ExerciseVideos = ({ exerciseVideos, name }) => {
                 </Stack>
             </Box>
         );
-    };
 
 
 };
