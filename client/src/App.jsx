@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Box } from "@mui/material";
 
@@ -14,44 +14,60 @@ import Signup from "./pages/Signup";
 import NewRoutine from "./pages/NewRoutine";
 
 import { CookiesProvider, useCookies } from "react-cookie";
+import { fetchExercises } from "./utils/fetchData";
+
+export const exercisesContext = createContext();
 
 const App = () => {
 	const [cookies, setCookie] = useCookies(["stretchedUser"]);
+	const [exercises, setExercises] = useState([]);
 
 	const handleLogin = (user) => {
 		setCookie("stretchedUser", user, { path: "/" });
 	};
 
+	useEffect(() => {
+		const fetchExercisesData = async () => {
+			const exerciseData = await fetchExercises();
+			setExercises(exerciseData);
+			console.log(exerciseData)
+		};
+
+		fetchExercisesData();
+	}, []);
+
 	return (
 		<Box width="100%s" m="auto">
-			{cookies.stretchedUser ? (
-				<Navbar user={cookies.stretchedUser.username} />
-			) : (
-				<Navbar />
-			)}
-			<Routes>
-				{cookies.stretchedUser ? (
-					<>
+			<CookiesProvider>
+				<Navbar user={cookies.stretchedUser ? cookies.stretchedUser : null} />
+				<exercisesContext.Provider value={exercises}>
+					<Routes>
 						<Route
 							path="/"
-							element={<Home user={cookies.stretchedUser} />}
+							element={
+								<Home
+									user={cookies.stretchedUser ? cookies.stretchedUser : null}
+								/>
+							}
 						/>
 						<Route
 							path="/exercise/:id"
-							element={<ExerciseDetail user={cookies.stretchedUser} />}
+							element={
+								<ExerciseDetail
+									user={cookies.stretchedUser ? cookies.stretchedUser : null}
+								/>
+							}
 						/>
-					</>
-				) : (
-					<>
-						<Route path="/" element={<Home />} />
-						<Route path="/exercise/:id" element={<ExerciseDetail />} />
-					</>
-				)}
+						<Route
+							path="/new-routine"
+							element={<NewRoutine user={cookies.stretchedUser} />}
+						/>
+						<Route path="/login" element={<Login onLogin={handleLogin} />} />
+						<Route path="/signup" element={<Signup />} />
+					</Routes>
+				</exercisesContext.Provider>
+			</CookiesProvider>
 
-				<Route path="/new-routine" element={<NewRoutine user={cookies.stretchedUser}/>} />
-				<Route path="/login" element={<Login onLogin={handleLogin} />} />
-				<Route path="/signup" element={<Signup />} />
-			</Routes>
 			<Footer />
 		</Box>
 	);

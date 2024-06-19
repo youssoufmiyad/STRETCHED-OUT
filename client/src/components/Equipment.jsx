@@ -11,6 +11,7 @@ const Equipment = ({ item, setEquipment
             type="button"
             alignItems="center"
             justifyContent="center"
+            textAlign={"center"}
             className="equipment-card"
             sx={{
                 borderTop: equipment === item ? '4px solid #000000' : '',
@@ -22,7 +23,8 @@ const Equipment = ({ item, setEquipment
                 gap: "47px"
             }}
             onClick={()=>{
-                setEquipment(item);
+                window.location.replace(`./#${item}`)
+                window.location.reload()
                 window.scrollTo({ top: 1800, left: 100, behavior: 'smooth' });
             }}
 

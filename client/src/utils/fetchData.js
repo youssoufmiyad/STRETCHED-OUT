@@ -2,8 +2,9 @@ export const exerciseOptions = {
 	method: "GET",
 
 	headers: {
-		"X-RapidAPI-Key": "914d3db231msh5871438e916f6dcp17650ajsnc0704da62c6c",
-		"X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
+		'x-rapidapi-key': '39205d2aa5msh80055dcae7208e9p1f9a7ajsne3ab0b0410c1',
+		'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
+		
 	},
 };
 
@@ -17,17 +18,31 @@ export const videoOptions = {
 };
 
 export const fetchData = async (url, options) => {
-	const response = await fetch(url, options);
-	const data = await response.json();
-	return data;
+	try {
+		const response = await fetch(url, options);
+		const data = await response.json();
+		console.log(data);
+		return data;
+	} catch (error) {
+		console.log(error);
+	}
 };
 
 export const fetchExercise = async (id) => {
 	const exerciseDetailData = await fetch(
-		`https://exercisedb.p.rapidapi.com/exercises/exercise/${id}`,
+		`https://exercisedb.p.rapidapi.com/exercises/${id}`,
 		exerciseOptions,
 	);
 	const data = await exerciseDetailData.json();
+	return data;
+};
+
+export const fetchExercises = async () => {
+	const exercisesDetailData = await fetch(
+		"https://exercisedb.p.rapidapi.com/exercises?limit=1000",
+		exerciseOptions,
+	);
+	const data = await exercisesDetailData.json();
 	return data;
 };
 

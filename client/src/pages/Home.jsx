@@ -11,7 +11,7 @@ const Home = ({user}) => {
 
   return (
     <Box>
-        <HeroBanner user={user.username} />
+        <HeroBanner user={user !== null ? user : null} />
         <SearchExercises 
         setExercices={setExercices}
         equipment={equipement}

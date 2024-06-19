@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { fetchExercise } from "../utils/fetchData";
 const params = new URLSearchParams(window.location.search);
 
-const exercise = await fetchExercise(params.get("id"));
-
 const NewRoutine = ({ user }) => {
+	const exercise = fetchExercise(params.get("id"));
+
 	useEffect(() => {
 		console.log(exercise);
-	}, []);
+	}, [exercise]);
+
+	console.log(user)
 
 	console.log(params.get("id"));
 	console.log(exercise.name);

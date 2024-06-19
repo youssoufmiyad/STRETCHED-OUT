@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-
 import { useCookies } from "react-cookie";
-
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import Logo from "../assets/images/Logo.png";
+
 const Navbar = ({ user }) => {
 	const url = useLocation().pathname;
 	const urlHash = useLocation().hash;
-	const navigate = useNavigate();
 	const [cookies, setCookie] = useCookies(["stretchedUser"]);
 
 	const [pos, setPos] = useState("");
@@ -22,10 +20,10 @@ const Navbar = ({ user }) => {
 		window.scrollY > 1 ? setPos("fixed") : setPos("");
 	};
 
-	const Disconnect = ()=> {
-		setCookie("stretchedUser", "", { path: "/" });
+	const Disconnect = () => {
+		setCookie("stretchedUser", null, { path: "/" });
 		window.location.reload();
-	}
+	};
 	return (
 		<Stack
 			sx={{
@@ -64,7 +62,7 @@ const Navbar = ({ user }) => {
 					gap="30px"
 					fontFamily="Alegreya"
 					fontSize="24px"
-					alignItems="flex-end"
+					alignItems="center"
 				>
 					<Link
 						to="/#"
@@ -96,7 +94,7 @@ const Navbar = ({ user }) => {
 					>
 						Exercises
 					</a>
-					{!user ? (
+					{user !== null ? (
 						<Link
 							to="/login"
 							className={url === "/login" ? "actual-section" : ""}
@@ -112,8 +110,8 @@ const Navbar = ({ user }) => {
 						</Link>
 					) : (
 						<Button
-						type="button"
-						onClick={Disconnect}
+							type="button"
+							onClick={Disconnect}
 							style={{
 								textDecoration: "none",
 								color: "#000000",

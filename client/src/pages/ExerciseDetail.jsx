@@ -17,37 +17,42 @@ const ExerciseDetail = ({ user }) => {
 
 	useEffect(() => {
 		const fetchExercisesData = async () => {
-			const exerciseDbUrl = "https://exercisedb.p.rapidapi.com";
-			const youtubeSearchUrl =
-				"https://youtube-search-and-download.p.rapidapi.com";
-
 			const exerciseDetailData = await fetchData(
-				`${exerciseDbUrl}/exercises/exercise/${id}`,
+				`https://exercisedb.p.rapidapi.com/exercises/exercise/${id}`,
 				exerciseOptions,
 			);
 			setExerciseDetail(exerciseDetailData);
-			console.log(exerciseDetail);
+		};
+		fetchExercisesData();
+	}, [id]);
 
+	useEffect(() => {
+		const fetchExercisesData = async () => {
 			const exerciseVideosData = await fetchData(
-				`${youtubeSearchUrl}/search?query=${exerciseDetailData.name} exercise`,
+				`https://youtube-search-and-download.p.rapidapi.com/search?query=${exerciseDetail.name} exercise`,
 				videoOptions,
 			);
 			setExerciseVideos(exerciseVideosData.contents);
+		};
+		fetchExercisesData();
+	}, [exerciseDetail]);
 
+	useEffect(() => {
+		const fetchExercisesData = async () => {
 			const targetMuscleExercisesData = await fetchData(
-				`${exerciseDbUrl}/exercises/target/${exerciseDetailData.target}`,
+				`https://exercisedb.p.rapidapi.com/exercises/target/${exerciseDetail.target}`,
 				exerciseOptions,
 			);
 			setTargetMuscleExercises(targetMuscleExercisesData);
 
 			const equimentExercisesData = await fetchData(
-				`${exerciseDbUrl}/exercises/equipment/${exerciseDetailData.equipment}`,
+				`https://exercisedb.p.rapidapi.com/exercises/equipment/${exerciseDetail.equipment}`,
 				exerciseOptions,
 			);
 			setEquipmentExercises(equimentExercisesData);
 		};
 		fetchExercisesData();
-	}, [id]);
+	}, [exerciseDetail]);
 
 	console.log(`EQUIPMENT = ${exerciseDetail.equipment}`);
 	console.log(`TARGET = ${exerciseDetail.target}`);
@@ -55,7 +60,10 @@ const ExerciseDetail = ({ user }) => {
 		<Box>
 			<Detail exerciseDetail={exerciseDetail} />
 			{user ? (
-				<AddExercise id={window.location.pathname.split("/").pop()} />
+				<AddExercise
+					id={window.location.pathname.split("/").pop()}
+					user={user}
+				/>
 			) : (
 				""
 			)}

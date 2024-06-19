@@ -1,80 +1,106 @@
-import React, { useEffect, useState } from 'react'
-import { Pagination } from '@mui/material'
-import { Box, Stack, Typography } from '@mui/material'
+import React, { useContext, useEffect, useState } from "react";
+import { Pagination } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 
-import { exerciseOptions, fetchData } from '../utils/fetchData'
-import ExerciseCard from './ExerciseCard'
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu'
+import ExerciseCard from "./ExerciseCard";
+import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 
-const Exercises = ({ exercises, setExercices, equipment }) => {
-  
-  const [currentPage, setCurrentPage] = useState(1);
-  const [exercisesPerPage] = useState(10);
+import { exercisesContext } from "../App";
 
-  const indexOfLastExercise = currentPage * exercisesPerPage
-  const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage
-  const currentExercises = exercises.slice(indexOfFirstExercise,indexOfLastExercise);
-  const paginate = (event, value) => {
-    setCurrentPage(value)
-    window.scrollTo({top: 1800, behavior:"smooth"})
-  }
+const Exercises = () => {
+	const exercises = useContext(exercisesContext);
+	const [equipment, setEquipment] = useState(
+		window.location.href
+			.substring(window.location.href.lastIndexOf("/") + 2)
+			.replace("%20", " "),
+	);
 
-  useEffect(() =>{
-    const fetchExercisesData = async () => {
-      let exerciseData = [];
+	const [currentPage, setCurrentPage] = useState(1);
+	const [exercisesPerPage] = useState(10);
 
-      if (equipment === 'all'){
-        exerciseData = await fetchData('https://exercisedb.p.rapidapi.com/exercises',
-        exerciseOptions)
-      }else{
-        exerciseData = await fetchData(`https://exercisedb.p.rapidapi.com/exercises/equipment/${equipment}`,
-        exerciseOptions)
-      }
+	const [displayedExercises, setDisplayedExercises] = useState([]);
+	const [currentExercises, setCurrentExercises] = useState([]);
 
-      setExercices(exerciseData)
-    }
+	const indexOfLastExercise = currentPage * exercisesPerPage;
+	const indexOfFirstExercise = indexOfLastExercise - exercisesPerPage;
 
-    fetchExercisesData();
-  }, [equipment,setExercices]);
+	const paginate = (event, value) => {
+		setCurrentPage(value);
+		window.scrollTo({ top: 1800, behavior: "smooth" });
+	};
 
-  return (
-    <Box id="exercises"
-      sx={{ mt: { lg: '110px' } }}
-      mt='50px'
-      p='20px'
-      
-    >
-      <Typography variant="h4" fontWeight="bold"
-        sx={{ fontSize: { lg: '44px', xs: '30px' } }}
-        mb="46px">
-        Showing Results
-      </Typography>
-      <Stack direction="row" sx={{ gap: { lg: '107px', xs: '50px' } }}
-        flexWrap="wrap" justifyContent="center">
+	useEffect(() => {
+		setEquipment(
+			window.location.href
+				.substring(window.location.href.lastIndexOf("/") + 2)
+				.replace("%20", " "),
+		);
+	}, [window.location.href]);
 
-        <ScrollMenu>
-        {currentExercises.map((exercise, idx) => (
-          <ExerciseCard exercise={exercise} />
-        ))}
-        </ScrollMenu>
-        <Stack>
-          <Stack mt="100px" alignItems="center">
-            {exercises.length > 9 &&(
-              <Pagination
-              color='standard'
-              shape='rounded'
-              defaultPage={1}
-              count={Math.ceil(exercises.length / exercisesPerPage)}
-              page={currentPage}
-              onChange={paginate}
-              size="large"
-              />
-            )}
-          </Stack>
-        </Stack>
-      </Stack>
-    </Box>
-  )
-}
+	useEffect(() => {
+		if ((equipment === "") | (equipment === "all")) {
+			setDisplayedExercises(exercises);
+		} else {
+			exercises.map((exercise) => {
+				console.log(`exercise equipment : ${exercise.equipment} equipment : ${equipment}`)
+				if (exercise.equipment === equipment) {
+					console.log("exercise :");
+					console.log(exercise);
+					setDisplayedExercises(oldArray  => [...oldArray , exercise]);
+				}
+			});
+		}
+	}, [equipment, exercises]);
 
-export default Exercises
+	useEffect(() => {
+		displayedExercises
+			? setCurrentExercises(
+					displayedExercises.slice(indexOfFirstExercise, indexOfLastExercise),
+			  )
+			: false;
+	}, [displayedExercises, indexOfFirstExercise, indexOfLastExercise]);
+
+	return (
+		<Box id="exercises" sx={{ mt: { lg: "110px" } }} mt="50px" p="20px">
+			<Typography
+				variant="h4"
+				fontWeight="bold"
+				sx={{ fontSize: { lg: "44px", xs: "30px" } }}
+				mb="46px"
+			>
+				Showing Results
+			</Typography>
+			<Stack
+				direction="row"
+				sx={{ gap: { lg: "107px", xs: "50px" } }}
+				flexWrap="wrap"
+				justifyContent="center"
+			>
+				<ScrollMenu>
+					{currentExercises
+						? currentExercises.map((exercise, idx) => (
+								<ExerciseCard exercise={exercise} />
+						  ))
+						: false}
+				</ScrollMenu>
+				<Stack>
+					<Stack mt="100px" alignItems="center">
+						{exercises.length > 9 && (
+							<Pagination
+								color="standard"
+								shape="rounded"
+								defaultPage={1}
+								count={Math.ceil(exercises.length / exercisesPerPage)}
+								page={currentPage}
+								onChange={paginate}
+								size="large"
+							/>
+						)}
+					</Stack>
+				</Stack>
+			</Stack>
+		</Box>
+	);
+};
+
+export default Exercises;

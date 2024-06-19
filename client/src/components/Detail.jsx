@@ -28,7 +28,7 @@ const Detail = ({ exerciseDetail }) => {
                 <img src={exerciseDetail.gifUrl} alt={exerciseDetail.name} loading="lazy" style={{ borderRadius: "20px", outline: "10px solid #000000", width: "600px", height: "600px" }} />
                 <Typography sx={{ fontSize: { lg: '64px', xs: '30px' }, fontFamily: "Spartan", fontWeight: "bold" }} textTransform="uppercase" variant='h3'>
                     {name}<br /><br />
-                    <span style={{ textTransform: "none", fontFamily: "monospace", fontWeight: "normal", fontSize: "30px" }}>Exercises keep you strong. {name} is a pretty descent exercise to target your {target}. It will help you strengthen your {bodyPart}.</span>
+                    <span style={{ textTransform: "none", fontFamily: "monospace", fontWeight: "normal", fontSize: "30px" }}>{exerciseDetail.instructions}</span>
                 </Typography>
             </Stack>
 
