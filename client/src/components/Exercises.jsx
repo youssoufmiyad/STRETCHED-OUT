@@ -35,14 +35,13 @@ const Exercises = () => {
 				.substring(window.location.href.lastIndexOf("/") + 2)
 				.replace("%20", " "),
 		);
-	}, [window.location.href]);
+	}, []);
 
 	useEffect(() => {
 		if ((equipment === "") | (equipment === "all")) {
 			setDisplayedExercises(exercises);
 		} else {
 			exercises.map((exercise) => {
-				console.log(`exercise equipment : ${exercise.equipment} equipment : ${equipment}`)
 				if (exercise.equipment === equipment) {
 					console.log("exercise :");
 					console.log(exercise);

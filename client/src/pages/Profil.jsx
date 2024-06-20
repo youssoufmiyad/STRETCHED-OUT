@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchUser } from "../utils/fetchData";
-import { Stack, Typography, Box } from "@mui/material";
-import Person from "@mui/icons-material/Person";
+import { Stack, Typography, Box, Grid } from "@mui/material";
+import ProfilBanner from "../components/ProfilBanner";
 
 const Profil = () => {
 	const [user, setUser] = useState();
@@ -12,19 +12,26 @@ const Profil = () => {
 		fetchUser(id, setUser);
 	}, [id]);
 	return (
-		<Stack>
-			<Box>
-				<Person sx={{width:64, height:64}}/>
-				<Typography
-					sx={{
-						textDecoration: "none",
-						color: "#000000",
-						fontSize: "40px",
-						fontFamily: "Spartan",
-					}}
-				>
-					{user ? user.username : null}
-				</Typography>
+		<Stack sx={{ justifyContent: "center" }}>
+			<ProfilBanner user={user} />
+			<br />
+			<h1 style={{ fontFamily: "Spartan", marginLeft: "5rem" }}>Routines : </h1>
+			<br />
+			<Box sx={{ flexGrow: 1 }}>
+				<Grid container justifyContent="center" spacing={5}>
+					{user
+						? user.routine.length > 0
+							? user.routine.map((routine) => {
+									return (
+										<Grid item>
+											<h2>{routine.name}</h2>
+											<br />
+										</Grid>
+									);
+							  })
+							: null
+						: null}
+				</Grid>
 			</Box>
 		</Stack>
 	);
