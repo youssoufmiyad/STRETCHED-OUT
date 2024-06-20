@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import show from "../assets/icons/show.png";
 import hide from "../assets/icons/hide.png";
 import encrypt from "../utils/encrypt";
-import { fetchUser } from "../utils/fetchData";
+import { fetchUsers } from "../utils/fetchData";
 
 const Login = ({onLogin}) => {
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Login = ({onLogin}) => {
 	const [showPassword, setShowPassword] = useState(false);
 
 	useEffect(() => {
-		fetchUser(setUsers);
+		fetchUsers(setUsers);
 	});
 
 	const handleSubmit = (e) => {

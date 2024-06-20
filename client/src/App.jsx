@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import NewRoutine from "./pages/NewRoutine";
+import Profil from "./pages/Profil";
 
 import { CookiesProvider, useCookies } from "react-cookie";
 import { fetchExercises } from "./utils/fetchData";
@@ -30,7 +31,6 @@ const App = () => {
 		const fetchExercisesData = async () => {
 			const exerciseData = await fetchExercises();
 			setExercises(exerciseData);
-			console.log(exerciseData)
 		};
 
 		fetchExercisesData();
@@ -61,6 +61,10 @@ const App = () => {
 						<Route
 							path="/new-routine"
 							element={<NewRoutine user={cookies.stretchedUser} />}
+						/>
+						<Route
+							path="/profil/:id"
+							element={<Profil  />}
 						/>
 						<Route path="/login" element={<Login onLogin={handleLogin} />} />
 						<Route path="/signup" element={<Signup />} />
