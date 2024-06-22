@@ -69,6 +69,9 @@ const Navbar = ({ user }) => {
 						fontWeight: "700",
 						fontFamily: "Spartan",
 					}}
+					onClick={() => {
+						window.scrollTo(0, 0);
+					}}
 				>
 					Home
 				</Link>
@@ -90,7 +93,9 @@ const Navbar = ({ user }) => {
 				<Link
 					to={`/profil/${user._id}`}
 					className={
-						(url === `/profil/${user._id}`) & (urlHash !== "#exercises") ? "actual-section" : ""
+						(url === `/profil/${user._id}`) & (urlHash !== "#exercises")
+							? "actual-section"
+							: ""
 					}
 					style={{
 						textDecoration: "none",
