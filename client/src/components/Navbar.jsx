@@ -7,7 +7,6 @@ import Logo from "../assets/images/Logo.png";
 const Navbar = ({ user }) => {
 	const url = useLocation().pathname;
 	const urlHash = useLocation().hash;
-	const [cookies, setCookie] = useCookies(["stretchedUser"]);
 
 	const [pos, setPos] = useState("");
 
@@ -94,7 +93,7 @@ const Navbar = ({ user }) => {
 					>
 						Exercises
 					</a>
-					{user !== null ? (
+					{user === null ? (
 						<Link
 							to="/login"
 							className={url === "/login" ? "actual-section" : ""}

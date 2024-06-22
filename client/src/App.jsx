@@ -32,21 +32,21 @@ const App = () => {
 			const exerciseData = await fetchExercises();
 			setExercises(exerciseData);
 		};
-
 		fetchExercisesData();
+		console.log(cookies.stretchedUser)
 	}, []);
 
 	return (
 		<Box width="100%s" m="auto">
 			<CookiesProvider>
-				<Navbar user={cookies.stretchedUser ? cookies.stretchedUser : null} />
+				<Navbar user={cookies.stretchedUser} />
 				<exercisesContext.Provider value={exercises}>
 					<Routes>
 						<Route
 							path="/"
 							element={
 								<Home
-									user={cookies.stretchedUser ? cookies.stretchedUser : null}
+									user={cookies.stretchedUser}
 								/>
 							}
 						/>

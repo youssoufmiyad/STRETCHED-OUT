@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Box } from '@mui/material'
 import HeroBanner from '../components/HeroBanner'
 import Exercises from '../components/Exercises'
@@ -9,9 +9,13 @@ const Home = ({user}) => {
   const [equipement, setEquipment] = useState('all');
   const [exercises, setExercices] = useState([]);
 
+  useEffect(() => {
+    console.log(user)
+  }, []);
+
   return (
     <Box>
-        <HeroBanner user={user !== null ? user : null} />
+        <HeroBanner user={user} />
         <SearchExercises 
         setExercices={setExercices}
         equipment={equipement}

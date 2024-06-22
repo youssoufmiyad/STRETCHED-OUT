@@ -46,7 +46,13 @@ export const fetchExercises = async () => {
 	return data;
 };
 
-export const fetchUser = async (setUsers) => {
+export const fetchUser = async (id, setUser) => {
+	const response = await fetch(`http://localhost:3000/users/${id}`);
+	const userData = await response.json();
+	setUser(userData);
+};
+
+export const fetchUsers = async (setUsers) => {
 	const response = await fetch("http://localhost:3000/users");
 	const userData = await response.json();
 	setUsers(userData);
