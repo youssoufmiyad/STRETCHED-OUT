@@ -25,6 +25,8 @@ const Navbar = ({ user }) => {
 	};
 	return (
 		<Stack
+			direction="row"
+			justifyContent="space-around"
 			sx={{
 				bgcolor: "#82B2CB",
 				height: "100px",
@@ -33,17 +35,17 @@ const Navbar = ({ user }) => {
 				top: "0px",
 				left: "0px",
 				zIndex: "1",
+				pt: "1rem",
+				justifyContent: "space-between",
 			}}
+			px="20px"
 		>
 			<Stack
 				direction="row"
-				justifyContent="space-around"
-				sx={{
-					gap: { sm: "40px", xs: "40px" },
-					mt: { sm: "32px", xs: "20px" },
-					justifyContent: "none",
-				}}
-				px="20px"
+				gap="3rem"
+				fontFamily="Alegreya"
+				fontSize="24px"
+				alignItems="center"
 			>
 				<Link to="/">
 					<img
@@ -52,37 +54,67 @@ const Navbar = ({ user }) => {
 						style={{
 							width: "48px",
 							height: "48px",
-							margin: "0px",
 						}}
 					/>
 				</Link>
-				<Stack
-					direction="row"
-					gap="30px"
-					fontFamily="Alegreya"
-					fontSize="24px"
-					alignItems="center"
+				<Link
+					to="/#"
+					className={
+						(url === "/") & (urlHash !== "#exercises") ? "actual-section" : ""
+					}
+					style={{
+						textDecoration: "none",
+						color: "#000000",
+						fontSize: "40px",
+						fontWeight: "700",
+						fontFamily: "Spartan",
+					}}
 				>
+					Home
+				</Link>
+				<a
+					href="/#exercises"
+					className={
+						(urlHash === "#exercises") & (url === "/") ? "actual-section" : ""
+					}
+					style={{
+						textDecoration: "none",
+						color: "#000000",
+						fontSize: "30px",
+						fontWeight: "700",
+						fontFamily: "Spartan",
+					}}
+				>
+					Exercises
+				</a>
+				<Link
+					to={`/profil/${user._id}`}
+					className={
+						(url === `/profil/${user._id}`) & (urlHash !== "#exercises") ? "actual-section" : ""
+					}
+					style={{
+						textDecoration: "none",
+						color: "#000000",
+						fontSize: "30px",
+						fontWeight: "700",
+						fontFamily: "Spartan",
+					}}
+				>
+					Profile
+				</Link>
+			</Stack>
+
+			<Stack
+				direction="row"
+				gap="30px"
+				fontFamily="Alegreya"
+				fontSize="24px"
+				alignItems="center"
+			>
+				{user === null ? (
 					<Link
-						to="/#"
-						className={
-							(url === "/") & (urlHash !== "#exercises") ? "actual-section" : ""
-						}
-						style={{
-							textDecoration: "none",
-							color: "#000000",
-							fontSize: "40px",
-							fontWeight: "700",
-							fontFamily: "Spartan",
-						}}
-					>
-						Home
-					</Link>
-					<a
-						href="/#exercises"
-						className={
-							(urlHash === "#exercises") & (url === "/") ? "actual-section" : ""
-						}
+						to="/login"
+						className={url === "/login" ? "actual-section" : ""}
 						style={{
 							textDecoration: "none",
 							color: "#000000",
@@ -91,38 +123,23 @@ const Navbar = ({ user }) => {
 							fontFamily: "Spartan",
 						}}
 					>
-						Exercises
-					</a>
-					{user === null ? (
-						<Link
-							to="/login"
-							className={url === "/login" ? "actual-section" : ""}
-							style={{
-								textDecoration: "none",
-								color: "#000000",
-								fontSize: "30px",
-								fontWeight: "700",
-								fontFamily: "Spartan",
-							}}
-						>
-							Sign in
-						</Link>
-					) : (
-						<Button
-							type="button"
-							onClick={Disconnect}
-							style={{
-								textDecoration: "none",
-								color: "#000000",
-								fontSize: "30px",
-								fontWeight: "700",
-								fontFamily: "Spartan",
-							}}
-						>
-							Disconnect
-						</Button>
-					)}
-				</Stack>
+						Sign in
+					</Link>
+				) : (
+					<Button
+						type="button"
+						onClick={Disconnect}
+						style={{
+							textDecoration: "none",
+							color: "#000000",
+							fontSize: "30px",
+							fontWeight: "700",
+							fontFamily: "Spartan",
+						}}
+					>
+						Disconnect
+					</Button>
+				)}
 			</Stack>
 		</Stack>
 	);
