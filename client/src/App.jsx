@@ -16,6 +16,7 @@ import Profil from "./pages/Profil";
 
 import { CookiesProvider, useCookies } from "react-cookie";
 import { fetchExercises } from "./utils/fetchData";
+import Routine from "./pages/Routine";
 
 export const exercisesContext = createContext();
 
@@ -33,7 +34,7 @@ const App = () => {
 			setExercises(exerciseData);
 		};
 		fetchExercisesData();
-		console.log(cookies.stretchedUser)
+		// console.log(cookies.stretchedUser)
 	}, []);
 
 	return (
@@ -65,6 +66,10 @@ const App = () => {
 						<Route
 							path="/profil/:id"
 							element={<Profil  />}
+						/>
+						<Route
+							path="/profil/:id/routines/:name"
+							element={<Routine  />}
 						/>
 						<Route path="/login" element={<Login onLogin={handleLogin} />} />
 						<Route path="/signup" element={<Signup />} />
