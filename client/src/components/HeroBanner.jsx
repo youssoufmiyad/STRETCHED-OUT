@@ -1,10 +1,7 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Box, Stack, Typography, Button } from "@mui/material";
 
 const HeroBanner = ({ user }) => {
-	useEffect(() => {
-		console.log(user)
-	}, []);
 	return (
 		<Box position="relative" p="90px">
 			{user !== undefined ? (
@@ -12,7 +9,7 @@ const HeroBanner = ({ user }) => {
 					fontWeight="900"
 					sx={{ fontSize: "70px", opacity: 0.6, fontFamily: "Spartan" }}
 				>
-					Hello {user.username } <br />
+					Hello {user.username} <br />
 				</Typography>
 			) : (
 				false

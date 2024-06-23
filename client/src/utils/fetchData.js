@@ -2,9 +2,8 @@ export const exerciseOptions = {
 	method: "GET",
 
 	headers: {
-		'x-rapidapi-key': '39205d2aa5msh80055dcae7208e9p1f9a7ajsne3ab0b0410c1',
-		'x-rapidapi-host': 'exercisedb.p.rapidapi.com'
-		
+		"x-rapidapi-key": "39205d2aa5msh80055dcae7208e9p1f9a7ajsne3ab0b0410c1",
+		"x-rapidapi-host": "exercisedb.p.rapidapi.com",
 	},
 };
 
@@ -40,6 +39,15 @@ export const fetchExercise = async (id) => {
 export const fetchExercises = async () => {
 	const exercisesDetailData = await fetch(
 		"https://exercisedb.p.rapidapi.com/exercises?limit=1000",
+		exerciseOptions,
+	);
+	const data = await exercisesDetailData.json();
+	return data;
+};
+
+export const getExerciseByName = async (name) => {
+	const exercisesDetailData = await fetch(
+		`https://exercisedb.p.rapidapi.com/exercises/name/${name}?offset=0&limit=10`,
 		exerciseOptions,
 	);
 	const data = await exercisesDetailData.json();
