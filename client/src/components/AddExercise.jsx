@@ -21,6 +21,9 @@ const AddExercise = ({ id, user }) => {
 		setAnchorEl(null);
 	};
 
+	console.log(`USER : ${user}`);
+	console.log(user.routine);
+
 	return (
 		<Stack>
 			<Button
@@ -48,13 +51,19 @@ const AddExercise = ({ id, user }) => {
 					},
 				}}
 			>
-				{user.routine.map((routine) => {
-					<MenuItem
-						sx={{ ":hover": { backgroundColor: "#82B2CB", color: "#fff" } }}
-					>
-						routine.name
-					</MenuItem>;
-				})}
+				{user
+					? user.routine.map((routine) => {
+							return (
+								<MenuItem
+									sx={{
+										":hover": { backgroundColor: "#82B2CB", color: "#fff" },
+									}}
+								>
+									{routine.name}
+								</MenuItem>
+							);
+					  })
+					: null}
 				<MenuItem
 					sx={{ ":hover": { backgroundColor: "#82B2CB", color: "#fff" } }}
 					onClick={newProgram}
