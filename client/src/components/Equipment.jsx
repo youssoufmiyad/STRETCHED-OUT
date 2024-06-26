@@ -5,7 +5,7 @@ import { goodIcon } from '../utils/goodIcon'
 
 const Equipment = ({ item, setEquipment
     , equipment }) => {
-    
+    const href = window.location.href.substring(window.location.href.lastIndexOf("/") + 2).replace("%20", " ")
     return (
         <Stack
             type="button"
@@ -14,7 +14,7 @@ const Equipment = ({ item, setEquipment
             textAlign={"center"}
             className="equipment-card"
             sx={{
-                borderTop: equipment === item ? '4px solid #000000' : '',
+                borderTop:  href === item ? '4px solid #000000' : '',
                 backgroundColor: "#F6F4EB",
                 borderBottomLeftRadius: '20px',
                 width: "270px",

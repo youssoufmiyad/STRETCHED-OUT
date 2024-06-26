@@ -5,8 +5,7 @@ import ExerciseCard from './ExerciseCard';
 import YoutubeWindow from './YoutubeWindow';
 
 const ExerciseVideos = ({ exerciseVideos, name }) => {
-    if (exerciseVideos === "") {
-        console.log("canceled");
+    if (!exerciseVideos) {
         return <Loader />;
     }
         return (

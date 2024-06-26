@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
+import { useCookies, Cookies } from "react-cookie";
 import { Link, useLocation } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import Logo from "../assets/images/Logo.png";
 
-const Navbar = ({ user }) => {
+const Navbar = () => {
 	const url = useLocation().pathname;
 	const urlHash = useLocation().hash;
-
+	const user = useCookies(["stretchedUser"])
 	const [pos, setPos] = useState("");
 
 	useEffect(() => {
@@ -23,6 +23,8 @@ const Navbar = ({ user }) => {
 		setCookie("stretchedUser", null, { path: "/" });
 		window.location.reload();
 	};
+	console.log("NAVBAR USER : ")
+	console.log(user)
 	return (
 		<Stack
 			direction="row"
@@ -90,23 +92,25 @@ const Navbar = ({ user }) => {
 				>
 					Exercises
 				</a>
-				<Link
-					to={`/profil/${user._id}`}
-					className={
-						(url === `/profil/${user._id}`) & (urlHash !== "#exercises")
-							? "actual-section"
-							: ""
-					}
-					style={{
-						textDecoration: "none",
-						color: "#000000",
-						fontSize: "30px",
-						fontWeight: "700",
-						fontFamily: "Spartan",
-					}}
-				>
-					Profile
-				</Link>
+				{user ? (
+					<Link
+						to={`/profil/${user._id}`}
+						className={
+							(url === `/profil/${user._id}`) & (urlHash !== "#exercises")
+								? "actual-section"
+								: ""
+						}
+						style={{
+							textDecoration: "none",
+							color: "#000000",
+							fontSize: "30px",
+							fontWeight: "700",
+							fontFamily: "Spartan",
+						}}
+					>
+						Profile
+					</Link>
+				) : null}
 			</Stack>
 
 			<Stack
