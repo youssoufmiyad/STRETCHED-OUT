@@ -1,9 +1,23 @@
 import React, { useState } from "react";
-import { Stack, Menu, MenuItem, Button, Paper } from "@mui/material";
+import { Stack, Menu, MenuItem, Button, Modal } from "@mui/material";
+import AddToRoutine from "./AddToRoutine";
 
-const AddExercise = ({ id, user }) => {
+const AddExercise = ({ id, user, exercise }) => {
 	const [anchorEl, setAnchorEl] = useState();
 	const isOpen = anchorEl ? true : false;
+
+	const [selectedRoutine, setSelectedRoutine] = useState();
+
+	const [addToRoutineOpen, setAddToRoutineOpen] = useState(false);
+	const handleAddToRoutineOpen = (routine) => {
+		setSelectedRoutine(routine);
+
+		setAddToRoutineOpen(true);
+	};
+	const handleAddToRoutineClose = () => {
+		setAddToRoutineOpen(false);
+	};
+
 	const test = [
 		{ name: "apdf", age: 19 },
 		{ name: "daozdko", age: 29 },
@@ -58,6 +72,10 @@ const AddExercise = ({ id, user }) => {
 									sx={{
 										":hover": { backgroundColor: "#82B2CB", color: "#fff" },
 									}}
+									value={routine.name}
+									onClick={() => {
+										handleAddToRoutineOpen(routine.name);
+									}}
 								>
 									{routine.name}
 								</MenuItem>
@@ -71,6 +89,13 @@ const AddExercise = ({ id, user }) => {
 					+ Nouveau programme
 				</MenuItem>
 			</Menu>
+			<Modal open={addToRoutineOpen} onClose={handleAddToRoutineClose}>
+				<AddToRoutine
+					exercise={exercise}
+					user={user}
+					routine={selectedRoutine}
+				/>
+			</Modal>
 		</Stack>
 	);
 };

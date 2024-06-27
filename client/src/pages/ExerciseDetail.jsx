@@ -63,6 +63,7 @@ const ExerciseDetail = ({ user }) => {
 				<AddExercise
 					id={window.location.pathname.split("/").pop()}
 					user={user}
+					exercise={exerciseDetail}
 				/>
 			) : (
 				""
