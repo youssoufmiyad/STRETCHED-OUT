@@ -28,6 +28,10 @@ const App = () => {
 		setCookie("stretchedUser", user, { path: "/" });
 	};
 
+	const handleDisconnect = () => {
+		setCookie("stretchedUser", null, { path: "/" });
+	};
+
 	useEffect(() => {
 		const fetchExercisesData = async () => {
 			const exerciseData = await fetchExercises();
@@ -40,17 +44,10 @@ const App = () => {
 	return (
 		<Box width="100%s" m="auto">
 			<CookiesProvider>
-				<Navbar user={cookies.stretchedUser} />
+				<Navbar user={cookies.stretchedUser} onDisconnect={handleDisconnect}/>
 				<exercisesContext.Provider value={exercises}>
 					<Routes>
-						<Route
-							path="/"
-							element={
-								<Home
-									user={cookies.stretchedUser}
-								/>
-							}
-						/>
+						<Route path="/" element={<Home user={cookies.stretchedUser} />} />
 						<Route
 							path="/exercise/:id"
 							element={
@@ -63,14 +60,8 @@ const App = () => {
 							path="/new-routine"
 							element={<NewRoutine user={cookies.stretchedUser} />}
 						/>
-						<Route
-							path="/profil/:id"
-							element={<Profil  />}
-						/>
-						<Route
-							path="/profil/:id/routines/:name"
-							element={<Routine  />}
-						/>
+						<Route path="/profil/:id" element={<Profil />} />
+						<Route path="/profil/:id/routines/:name" element={<Routine />} />
 						<Route path="/login" element={<Login onLogin={handleLogin} />} />
 						<Route path="/signup" element={<Signup />} />
 					</Routes>

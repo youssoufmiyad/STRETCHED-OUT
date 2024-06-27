@@ -38,7 +38,7 @@ const Exercises = () => {
 	}, []);
 
 	useEffect(() => {
-		if ((equipment === "") | (equipment === "all")) {
+		if ((equipment === "") | (equipment === "all") | (equipment === "exercises")) {
 			setDisplayedExercises(exercises);
 		} else {
 			exercises.map((exercise) => {

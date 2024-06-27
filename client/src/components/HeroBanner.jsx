@@ -4,7 +4,7 @@ import { Box, Stack, Typography, Button } from "@mui/material";
 const HeroBanner = ({ user }) => {
 	return (
 		<Box position="relative" p="90px">
-			{user !== undefined ? (
+			{user !== undefined & user !== null ? (
 				<Typography
 					fontWeight="900"
 					sx={{ fontSize: "70px", opacity: 0.6, fontFamily: "Spartan" }}

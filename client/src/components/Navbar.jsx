@@ -4,12 +4,12 @@ import { Link, useLocation } from "react-router-dom";
 import { Button, Stack } from "@mui/material";
 import Logo from "../assets/images/Logo.png";
 
-const Navbar = () => {
+const Navbar = ({user, onDisconnect}) => {
 	const url = useLocation().pathname;
 	const urlHash = useLocation().hash;
-	const user = useCookies(["stretchedUser"])
+	// const user = useCookies(["stretchedUser"])
 	const [pos, setPos] = useState("");
-
+	console.log(user)
 	useEffect(() => {
 		window.addEventListener("scroll", stickNavbar);
 		return () => window.removeEventListener("scroll", stickNavbar);
@@ -20,7 +20,7 @@ const Navbar = () => {
 	};
 
 	const Disconnect = () => {
-		setCookie("stretchedUser", null, { path: "/" });
+		onDisconnect()
 		window.location.reload();
 	};
 	console.log("NAVBAR USER : ")

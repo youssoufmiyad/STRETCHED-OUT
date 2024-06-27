@@ -14,7 +14,7 @@ const Equipment = ({ item, setEquipment
             textAlign={"center"}
             className="equipment-card"
             sx={{
-                borderTop:  href === item ? '4px solid #000000' : '',
+                borderBottom:  href === item ? '4px solid #000000' : '',
                 backgroundColor: "#F6F4EB",
                 borderBottomLeftRadius: '20px',
                 width: "270px",
