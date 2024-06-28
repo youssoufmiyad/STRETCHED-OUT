@@ -9,7 +9,6 @@ const Navbar = ({user, onDisconnect}) => {
 	const urlHash = useLocation().hash;
 	// const user = useCookies(["stretchedUser"])
 	const [pos, setPos] = useState("");
-	console.log(user)
 	useEffect(() => {
 		window.addEventListener("scroll", stickNavbar);
 		return () => window.removeEventListener("scroll", stickNavbar);
@@ -23,8 +22,6 @@ const Navbar = ({user, onDisconnect}) => {
 		onDisconnect()
 		window.location.reload();
 	};
-	console.log("NAVBAR USER : ")
-	console.log(user)
 	return (
 		<Stack
 			direction="row"
@@ -120,7 +117,7 @@ const Navbar = ({user, onDisconnect}) => {
 				fontSize="24px"
 				alignItems="center"
 			>
-				{user === null ? (
+				{!user ? (
 					<Link
 						to="/login"
 						className={url === "/login" ? "actual-section" : ""}
