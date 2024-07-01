@@ -20,9 +20,16 @@ const userSchema = new mongoose.Schema({
 				{
 					name: { type: String },
 					sets: { type: Number },
-                    reps: { type: Number },
+					reps: { type: Number },
 				},
 			],
+		},
+	],
+	measurements: [
+		{
+			date: { type: Date },
+			size: { type: Number },
+			weight: { type: Number },
 		},
 	],
 });

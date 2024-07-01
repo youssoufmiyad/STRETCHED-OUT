@@ -50,6 +50,9 @@ router.patch("/:id", getUser, async (req, res) => {
 	if (req.body.routine != null) {
 		res.user.routine = req.body.routine;
 	}
+	if (req.body.measurements != null) {
+		res.user.measurements = req.body.measurements;
+	}
 	try {
 		const updatedUser = await res.user.save();
 		res.json(updatedUser);
