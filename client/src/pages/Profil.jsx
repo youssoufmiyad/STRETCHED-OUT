@@ -4,7 +4,8 @@ import { fetchUser } from "../utils/fetchData";
 import { Stack, Typography } from "@mui/material";
 import ProfilBanner from "../components/ProfilBanner";
 import RoutineGrid from "../components/routineGrid";
-import Imc from "../components/Imc";
+import CalculImc from "../components/CalculImc";
+import TrackingImc from "../components/TrackingImc";
 
 const Profil = () => {
 	const [user, setUser] = useState();
@@ -17,13 +18,26 @@ const Profil = () => {
 		<Stack sx={{ justifyContent: "center" }}>
 			<ProfilBanner user={user} />
 			<br />
-			<Typography variant="h2" sx={{ fontFamily: "Spartan", marginLeft: "5rem" }}>Routines : </Typography>
+			<Typography
+				variant="h2"
+				sx={{ fontFamily: "Spartan", marginLeft: "5rem" }}
+			>
+				Routines :{" "}
+			</Typography>
 			<br />
 			<RoutineGrid user={user} />
 			<br />
-			<Typography variant="h2" sx={{ fontFamily: "Spartan", marginLeft: "5rem" }}>IMC : </Typography>
+			<Typography
+				variant="h2"
+				sx={{ fontFamily: "Spartan", marginLeft: "5rem" }}
+			>
+				IMC :{" "}
+			</Typography>
 			<br />
-			<Imc />
+			<Stack direction={"row"}>
+				<CalculImc />
+				<TrackingImc />
+			</Stack>
 		</Stack>
 	);
 };

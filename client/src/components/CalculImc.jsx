@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Stack, TextField, Typography, Box } from "@mui/material";
 
-const Imc = () => {
+const CalculImc = () => {
 	const [taille, setTaille] = useState(0);
 	const [poids, setPoids] = useState(0);
 	const [imc, setImc] = useState(0);
@@ -27,10 +27,17 @@ const Imc = () => {
 		}
 	}, [imc]);
 	return (
-		<Stack sx={{ margin: "2rem", }}>
+		<Stack sx={{ margin: "2rem" }}>
+			<Typography
+				variant="h4"
+				sx={{ fontFamily: "Spartan" }}
+			>
+				Simulation : 
+			</Typography>
+
 			<Box sx={{ direction: "row" }}>
 				<TextField
-					label="Taille en cm"
+					label="Size (cm)"
 					type="number"
 					onChange={(e) => {
 						setTaille(e.target.value);
@@ -39,7 +46,7 @@ const Imc = () => {
 					sx={{ width: "180px", marginRight: "1rem" }}
 				/>
 				<TextField
-					label="poids en kg"
+					label="weight (kg)"
 					type="number"
 					onChange={(e) => {
 						setPoids(e.target.value);
@@ -48,14 +55,20 @@ const Imc = () => {
 					sx={{ width: "180px" }}
 				/>
 			</Box>
-<br />
-			<Typography variant="h3" sx={{alignSelf:"center"}}>Résultat : </Typography>
-      <br />
-			<Typography variant="h4" sx={{alignSelf:"center"}}>{imc}</Typography>
 			<br />
-			<Typography variant="h5" sx={{alignSelf:"center",}}>{status}</Typography>
+			<Typography variant="h3" >
+				Result :{" "}
+			</Typography>
+			<br />
+			<Typography variant="h4" >
+				{imc}
+			</Typography>
+			<br />
+			<Typography variant="h5" >
+				{status}
+			</Typography>
 		</Stack>
 	);
 };
 
-export default Imc;
+export default CalculImc;

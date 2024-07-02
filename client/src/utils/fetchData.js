@@ -29,7 +29,7 @@ export const fetchData = async (url, options) => {
 
 export const fetchExercise = async (id) => {
 	const exerciseDetailData = await fetch(
-		`https://exercisedb.p.rapidapi.com/exercises/${id}`,
+		`https://exercisedb.p.rapidapi.com/exercises/exercise/${id}`,
 		exerciseOptions,
 	);
 	const data = await exerciseDetailData.json();

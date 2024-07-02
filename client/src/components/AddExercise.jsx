@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Stack, Menu, MenuItem, Button, Modal } from "@mui/material";
 import AddToRoutine from "./AddToRoutine";
 
@@ -35,8 +35,14 @@ const AddExercise = ({ id, user, exercise }) => {
 		setAnchorEl(null);
 	};
 
-	console.log(`USER : ${user}`);
-	console.log(user.routine);
+	console.log("USER : ");
+	console.log(user);
+
+	useEffect(() => {
+		if (user.routine) {
+			console.log(user.routine);
+		}
+	}, [user]);
 
 	return (
 		<Stack>
