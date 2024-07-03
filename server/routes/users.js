@@ -79,7 +79,7 @@ router.post("/:id/addExerciseToProgram", getUser, async (req, res) => {
 		reps: req.body.reps,
 	};
 	let added = false;
-	res.user.routine.map(async (routine) => {
+	res.user.routine.map((routine) => {
 		console.log(`routine name : ${routine.name}`);
 		if (routine.name === routineName) {
 			routine.exercises.push(exercise);
@@ -97,6 +97,32 @@ router.post("/:id/addExerciseToProgram", getUser, async (req, res) => {
 	}
 
 	return res.json({ message: `No program named ${routineName}` });
+});
+
+router.post("/:id/addMeasurements", getUser, async (req, res) => {
+	const measure = {
+		date: req.body.date,
+		size: req.body.size,
+		weight: req.body.weight,
+	};
+	let dateHasRecord = false;
+	res.user.measurements.map((m) => {
+		if (m.date === measure.date) {
+			m.size = measure.size;
+			m.weight = measure.weight;
+			dateHasRecord = true;
+		}
+	});
+	if (!dateHasRecord) {
+		res.user.measurements.push(measure);
+	}
+
+	try {
+		await res.user.save();
+		return res.status(200).json({message: "Measure successfully added !"});
+	} catch (err) {
+		return res.status(500).json({ message: err.message });
+	}
 });
 
 // MIDDLEWARE (permet de confirmer si l'écrit qu'on cherche existe)
