@@ -23,17 +23,48 @@ const TrackingImc = () => {
 	useEffect(() => {
 		if (user) {
 			HasRecord(startDate);
+			console.log(startDate);
 		}
 	}, [user, startDate]);
 
 	const HasRecord = (startDate) => {
+		let recordFound = false
 		user.measurements.map((m) => {
-			if (m.date === startDate.toISOString()) {
+			const comparisonDate = new Date(m.date);
+
+			console.log(
+				`comparisonDate.getFullYear() === startDate.getFullYear() : ${
+					comparisonDate.getFullYear() === startDate.getFullYear()
+				}`,
+			);
+			console.log(
+				`comparisonDate.getMonth() === startDate.getMonth() : ${
+					comparisonDate.getMonth() === startDate.getMonth()
+				}`,
+			);
+			console.log(
+				`comparisonDate.getDay() === startDate.getDay() : ${
+					comparisonDate.getDay() === startDate.getDay()
+				}`,
+			);
+			console.log(`${comparisonDate.getDay()} ${startDate.getDay()}`);
+
+			if (
+				comparisonDate.getFullYear() === startDate.getFullYear() &&
+				comparisonDate.getMonth() === startDate.getMonth() &&
+				comparisonDate.getDate() === startDate.getDate()
+			) {
+				recordFound = true
 				setHasRecord(true);
 				setSize(m.size);
 				setWeight(m.weight);
 			}
 		});
+		if (!recordFound) {
+			setHasRecord(false);
+		}
+		
+
 	};
 
 	return (
@@ -45,17 +76,19 @@ const TrackingImc = () => {
 				selected={startDate}
 				onChange={(date) => setStartDate(date)}
 			/>
+			<br />
 			<TextField
 				label="Size (cm)"
 				type="number"
 				onChange={(e) => {
 					setSize(e.target.value);
 				}}
-				defaultValue={size}
+				value={size}
 				disabled={hasRecord}
 				InputProps={{ inputProps: { min: 40, max: 280 } }}
 				sx={{ width: "180px", marginRight: "1rem" }}
 			/>
+			<br />
 			<TextField
 				label="Weight (kg)"
 				type="number"
@@ -63,7 +96,7 @@ const TrackingImc = () => {
 					setWeight(e.target.value);
 				}}
 				disabled={hasRecord}
-				defaultValue={weight}
+				value={weight}
 				InputProps={{ inputProps: { min: 40, max: 280 } }}
 				sx={{ width: "180px", marginRight: "1rem" }}
 			/>
