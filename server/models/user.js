@@ -27,7 +27,7 @@ const userSchema = new mongoose.Schema({
 	],
 	measurements: [
 		{
-			date: { type: Date },
+			date: { type: String },
 			size: { type: Number },
 			weight: { type: Number },
 		},
