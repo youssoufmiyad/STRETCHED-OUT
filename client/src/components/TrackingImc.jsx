@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 
-import { Stack, Typography, TextField } from "@mui/material";
+import { Stack, Typography, TextField, Button } from "@mui/material";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { fetchUser } from "../utils/fetchData";
@@ -27,8 +27,26 @@ const TrackingImc = () => {
 		}
 	}, [user, startDate]);
 
+	const saveMeasures = async () => {
+		const requestOptions = {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({
+				date: startDate.toISOString(),
+				size: size,
+				weight: weight,
+			}),
+		};
+		const response = await fetch(
+			`http://localhost:3000/users/${user._id}/addMeasurements/`,
+			requestOptions,
+		);
+		console.log(response);
+		await window.location.reload();
+	};
+
 	const HasRecord = (startDate) => {
-		let recordFound = false
+		let recordFound = false;
 		user.measurements.map((m) => {
 			const comparisonDate = new Date(m.date);
 
@@ -54,7 +72,7 @@ const TrackingImc = () => {
 				comparisonDate.getMonth() === startDate.getMonth() &&
 				comparisonDate.getDate() === startDate.getDate()
 			) {
-				recordFound = true
+				recordFound = true;
 				setHasRecord(true);
 				setSize(m.size);
 				setWeight(m.weight);
@@ -63,8 +81,6 @@ const TrackingImc = () => {
 		if (!recordFound) {
 			setHasRecord(false);
 		}
-		
-
 	};
 
 	return (
@@ -83,7 +99,7 @@ const TrackingImc = () => {
 				onChange={(e) => {
 					setSize(e.target.value);
 				}}
-				value={size}
+				value={size || ""}
 				disabled={hasRecord}
 				InputProps={{ inputProps: { min: 40, max: 280 } }}
 				sx={{ width: "180px", marginRight: "1rem" }}
@@ -96,10 +112,20 @@ const TrackingImc = () => {
 					setWeight(e.target.value);
 				}}
 				disabled={hasRecord}
-				value={weight}
+				value={weight || ""}
 				InputProps={{ inputProps: { min: 40, max: 280 } }}
 				sx={{ width: "180px", marginRight: "1rem" }}
 			/>
+			<br />
+			<Button
+				variant="contained"
+				disabled={hasRecord}
+				onClick={async () => {
+					await saveMeasures();
+				}}
+			>
+				enregistrer
+			</Button>
 		</Stack>
 	);
 };
