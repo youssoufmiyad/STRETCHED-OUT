@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Button, Input, Stack, Link, Typography } from "@mui/material";
+import { Button, TextField, Stack, Link, Typography } from "@mui/material";
 import React, { useState, useRef, useEffect } from "react";
 
 import show from "../assets/icons/show.png";
@@ -130,7 +130,7 @@ const Signup = () => {
 					}}
 				>
 					<form>
-						<Input
+						<TextField
 							type={"text"}
 							placeholder="type your username"
 							id="username"
@@ -146,7 +146,7 @@ const Signup = () => {
 							}}
 						/>
 
-						<Input
+						<TextField
 							type="email"
 							placeholder="type your email"
 							id="email"
@@ -163,7 +163,7 @@ const Signup = () => {
 						/>
 
 						<Stack direction="row">
-							<Input
+							<TextField
 								type={showPassword ? "text" : "password"}
 								placeholder="type your password"
 								id="password"
@@ -189,7 +189,7 @@ const Signup = () => {
 							</Button>
 						</Stack>
 
-						<Input
+						<TextField
 							type={showPassword ? "text" : "password"}
 							placeholder="confirm your password"
 							id="password"
