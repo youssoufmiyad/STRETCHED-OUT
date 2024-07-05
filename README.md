@@ -20,9 +20,9 @@ je la développe à titre éducatif dans mon temps libre (pour l'instant).
 - Chercher un exercice en particulier :white_check_mark:
 - Représentation graphique des exercices :white_check_mark:
 - Identification / authentification :white_check_mark:
-- Composition d'un programme (sauvegardé sur le compte de l'utilisateur) :hourglass_flowing_sand:
+- Composition d'un programme (sauvegardé sur le compte de l'utilisateur) :white_check_mark:
 - Redirection vers des vidéos pertinentes pour chaque exercice :white_check_mark:
-- Suivi de l'IMC :hourglass_flowing_sand:
+- Suivi de l'IMC :construction:
 - Version mobile :hourglass_flowing_sand:
 
 ## Lancement
