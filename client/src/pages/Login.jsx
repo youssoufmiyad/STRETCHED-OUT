@@ -1,11 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import {
-	Button,
-	TextField,
-	Stack,
-	Link,
-	Typography,
-} from "@mui/material";
+import { Button, TextField, Stack, Link, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
 
 import show from "../assets/icons/show.png";
@@ -22,6 +16,8 @@ const Login = ({ onLogin }) => {
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 
+	const [errorMessage, setErrorMessage] = useState("");
+
 	useEffect(() => {
 		fetchUsers(setUsers);
 	});
@@ -32,11 +28,9 @@ const Login = ({ onLogin }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(`email = ${email} password = ${password}`);
 		let userExist = false;
 		let actualUser;
 		for (let i = 0; i < users.length; i++) {
-			console.log(users[i]);
 			if (users[i].email === email) {
 				userExist = true;
 				actualUser = users[i];
@@ -45,13 +39,16 @@ const Login = ({ onLogin }) => {
 				actualUser = users[i];
 			}
 		}
-		userExist ? console.log("user exist") : console.log("user doesn't exist");
-		if (encrypt(password) === actualUser.password) {
-			console.log("correct password");
+		console.log(password);
+
+		if (!actualUser) {
+			setErrorMessage("adress or password incorrect");
+		} else if (encrypt(password) === actualUser.password) {
+			setErrorMessage("");
 			onLogin(actualUser);
 			navigate("/");
 		} else {
-			console.log("incorrect password");
+			setErrorMessage("adress or password incorrect");
 		}
 	};
 
@@ -80,6 +77,7 @@ const Login = ({ onLogin }) => {
 					onChange={(e) => {
 						setEmail(e.target.value);
 					}}
+					error={errorMessage.length > 0 ? true : false}
 					sx={{
 						width: "100%",
 						marginTop: "64px",
@@ -99,6 +97,8 @@ const Login = ({ onLogin }) => {
 						onChange={(e) => {
 							setPassword(e.target.value);
 						}}
+						error={errorMessage.length > 0 ? true : false}
+						helperText={errorMessage}
 						sx={{
 							width: "100%",
 							marginTop: "64px",

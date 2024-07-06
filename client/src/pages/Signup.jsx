@@ -17,18 +17,22 @@ const Signup = () => {
 
 	const [username, setUsername] = useState("");
 	const [validUsername, setValidUsername] = useState(false);
+	const [usernameErrorMessage, setUsernameErrorMessage] = useState("");
 
 	const [email, setEmail] = useState("");
 	const [validEmail, setValidEmail] = useState(false);
+	const [emailErrorMessage, setEmailErrorMessage] = useState("");
 
 	const [password, setPassword] = useState("");
 	const [validPassword, setValidPassword] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
+	const [passwordErrorMessage, setPasswordErrorMessage] = useState();
 
 	const [matchPwd, setMatchPwd] = useState("");
 	const [validMatch, setValidMatch] = useState(false);
+	const [matchPasswordErrorMessage, setMatchPasswordErrorMessage] =
+		useState("");
 
-	const [errMsg, setErrMsg] = useState("");
 	const [success, setSuccess] = useState(false);
 
 	const POSTREQUEST = async () => {
@@ -73,10 +77,6 @@ const Signup = () => {
 		console.log(`is ${matchPwd} equal to ${password}: ${validMatch}`);
 	}, [matchPwd, validMatch, password]);
 
-	useEffect(() => {
-		setErrMsg("");
-	});
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -85,20 +85,36 @@ const Signup = () => {
 		const v2 = PWD_REGEX.test(password);
 		const v3 = USER_REGEX.test(username);
 		console.log(`test mail ${v1} test pwd ${v2} test user ${v3}`);
-		if (!v1 || !v2 || !validMatch) {
-			setErrMsg("Invalid Entry");
-			console.log(errMsg);
+		if (!v1) {
+			setEmailErrorMessage("Invalid mail adress");
+			setSuccess(false);
+		}
+		if (!v2) {
+			setPasswordErrorMessage(
+				<>
+					Invalid password, password has to contain : <br /> - 1 lowercase
+					letter
+					<br /> - 1 uppercase letter <br /> - 1 special caracter <br /> - 1
+					number <br />
+					password has to be 8 character minimum
+				</>,
+			);
+			setSuccess(false);
+		}
+		if (!v3) {
+			setUsernameErrorMessage("Invalid username");
+			setSuccess(false);
+		}
+		if (!validMatch) {
+			setMatchPasswordErrorMessage("Password doesnt match");
+			setSuccess(false);
+		}
+		if (!success) {
 			return;
 		}
 
 		console.log(`user = ${email} pwd = ${password}`);
 		console.log("data transmission starts...");
-		const body = JSON.stringify({
-			email: email,
-			username: username,
-			password: encrypt(password),
-		});
-		console.log(body);
 		// When a post request is sent to the create url, we'll add a new account to the database.
 		POSTREQUEST();
 		console.log("request sent");
@@ -107,100 +123,68 @@ const Signup = () => {
 
 	return (
 		<>
-			{success ? (
-				<section>
-					<h1>Success!</h1>
-					<p>
-						<a href="login">Sign In</a>
-					</p>
-				</section>
-			) : (
-				<Stack
-					p="64px"
-					sx={{
-						backgroundColor: "#F6F4EB",
-						width: { lg: "25%", xs: "50%" },
-						height: "700px",
-						marginLeft: { lg: "40%", xs: "28%" },
-						marginBottom: { lg: "10%", xs: "20%" },
-						marginTop: "5%",
+			<Stack
+				p="64px"
+				sx={{
+					backgroundColor: "#F6F4EB",
+					width: { lg: "25%", xs: "50%" },
+					marginLeft: { lg: "40%", xs: "28%" },
+					marginBottom: { lg: "10%", xs: "20%" },
+					marginTop: "5%",
+				}}
+			>
+				<form
+					onSubmit={(e) => {
+						handleSubmit(e);
 					}}
 				>
-					<form
-						onSubmit={(e) => {
-							handleSubmit(e);
+					<TextField
+						type={"text"}
+						placeholder="type your username"
+						id="username"
+						name="username"
+						onChange={(e) => {
+							setUsername(e.target.value);
 						}}
-					>
-						<TextField
-							type={"text"}
-							placeholder="type your username"
-							id="username"
-							name="username"
-							onChange={(e) => {
-								setUsername(e.target.value);
-							}}
-							sx={{
-								width: "100%",
-								marginTop: "64px",
-								fontFamily: "Spartan",
-								fontSize: { lg: "3Opx", xs: "24px" },
-							}}
-						/>
+						error={usernameErrorMessage.length > 1 ? true : false}
+						helperText={usernameErrorMessage}
+						sx={{
+							width: "100%",
+							marginTop: "64px",
+							fontFamily: "Spartan",
+							fontSize: { lg: "3Opx", xs: "24px" },
+						}}
+					/>
 
-						<TextField
-							type="email"
-							placeholder="type your email"
-							id="email"
-							name="email"
-							onChange={(e) => {
-								setEmail(e.target.value);
-							}}
-							sx={{
-								width: "100%",
-								marginTop: "64px",
-								fontFamily: "Spartan",
-								fontSize: { lg: "3Opx", xs: "24px" },
-							}}
-						/>
+					<TextField
+						type="email"
+						placeholder="type your email"
+						id="email"
+						name="email"
+						onChange={(e) => {
+							setEmail(e.target.value);
+						}}
+						error={emailErrorMessage.length > 1 ? true : false}
+						helperText={emailErrorMessage}
+						sx={{
+							width: "100%",
+							marginTop: "64px",
+							fontFamily: "Spartan",
+							fontSize: { lg: "3Opx", xs: "24px" },
+						}}
+					/>
 
-						<Stack direction="row">
-							<TextField
-								type={showPassword ? "text" : "password"}
-								placeholder="type your password"
-								id="password"
-								name="password"
-								onChange={(e) => {
-									setPassword(e.target.value);
-								}}
-								sx={{
-									width: "100%",
-									marginTop: "64px",
-									fontFamily: "Spartan",
-									fontSize: { lg: "3Opx", xs: "24px" },
-								}}
-							/>
-
-							<Button
-								sx={{ height: "20px", marginTop: "72px" }}
-								onClick={() => {
-									setShowPassword((prev) => !prev);
-								}}
-							>
-								<img
-									src={showPassword ? show : hide}
-									alt={showPassword ? "show password" : "hide password"}
-								/>
-							</Button>
-						</Stack>
-
+					<Stack direction="row">
 						<TextField
 							type={showPassword ? "text" : "password"}
-							placeholder="confirm your password"
+							placeholder="type your password"
 							id="password"
 							name="password"
 							onChange={(e) => {
-								setMatchPwd(e.target.value);
+								setPassword(e.target.value);
 							}}
+							error={passwordErrorMessage  ? true : false}
+							helperText={passwordErrorMessage}
 							sx={{
 								width: "100%",
 								marginTop: "64px",
@@ -210,39 +194,69 @@ const Signup = () => {
 						/>
 
 						<Button
-							type="submit"
-							sx={{
-								marginTop: "120px",
-								bgcolor: "#4682A9",
-								color: "#000",
-								textTransform: "none",
-								fontWeight: "700",
-								fontFamily: "Spartan",
-								fontSize: { lg: "3Opx", xs: "24px" },
-								height: "54px",
-								width: "100%",
+							sx={{ height: "20px", marginTop: "72px" }}
+							onClick={() => {
+								setShowPassword((prev) => !prev);
 							}}
 						>
-							Sign up
+							<img
+								src={showPassword ? show : hide}
+								alt={showPassword ? "show password" : "hide password"}
+							/>
 						</Button>
-					</form>
+					</Stack>
 
-					<Link
-						underline="none"
-						color="ButtonHighlight"
-						style={{
-							textDecoration: "none",
-							color: "#000000",
-							fontSize: "12px",
+					<TextField
+						type={showPassword ? "text" : "password"}
+						placeholder="confirm your password"
+						id="password"
+						name="password"
+						onChange={(e) => {
+							setMatchPwd(e.target.value);
+						}}
+						error={matchPasswordErrorMessage.length > 1 ? true : false}
+						helperText={matchPasswordErrorMessage}
+						sx={{
+							width: "100%",
+							marginTop: "64px",
+							fontFamily: "Spartan",
+							fontSize: { lg: "3Opx", xs: "24px" },
+						}}
+					/>
+
+					<Button
+						type="submit"
+						sx={{
+							marginTop: "120px",
+							bgcolor: "#4682A9",
+							color: "#000",
+							textTransform: "none",
 							fontWeight: "700",
+							fontFamily: "Spartan",
+							fontSize: { lg: "3Opx", xs: "24px" },
+							height: "54px",
+							width: "100%",
 						}}
 					>
-						<Typography>
-							Already have an account ? <a href="login">Log in</a>
-						</Typography>
-					</Link>
-				</Stack>
-			)}
+						Sign up
+					</Button>
+				</form>
+
+				<Link
+					underline="none"
+					color="ButtonHighlight"
+					style={{
+						textDecoration: "none",
+						color: "#000000",
+						fontSize: "12px",
+						fontWeight: "700",
+					}}
+				>
+					<Typography>
+						Already have an account ? <a href="login">Log in</a>
+					</Typography>
+				</Link>
+			</Stack>
 		</>
 	);
 };
