@@ -13,7 +13,7 @@ const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,24}$/;
 const Signup = () => {
 	const userRef = useRef();
 
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 
 	const [username, setUsername] = useState("");
 	const [validUsername, setValidUsername] = useState(false);
@@ -42,10 +42,7 @@ const Signup = () => {
 				password: hashPWD,
 			}),
 		};
-		const response = await fetch(
-			"http://localhost:3000/users",
-			requestOptions,
-		);
+		const response = await fetch("http://localhost:3000/users", requestOptions);
 		return await response.json();
 	};
 
@@ -104,8 +101,8 @@ const Signup = () => {
 		console.log(body);
 		// When a post request is sent to the create url, we'll add a new account to the database.
 		POSTREQUEST();
-        console.log("request sent");
-        navigate("/")
+		console.log("request sent");
+		navigate("/");
 	};
 
 	return (
@@ -129,7 +126,11 @@ const Signup = () => {
 						marginTop: "5%",
 					}}
 				>
-					<form>
+					<form
+						onSubmit={(e) => {
+							handleSubmit(e);
+						}}
+					>
 						<TextField
 							type={"text"}
 							placeholder="type your username"
@@ -185,7 +186,10 @@ const Signup = () => {
 									setShowPassword((prev) => !prev);
 								}}
 							>
-								<img src={showPassword ? show : hide} alt={showPassword ? "show password" : "hide password"} />
+								<img
+									src={showPassword ? show : hide}
+									alt={showPassword ? "show password" : "hide password"}
+								/>
 							</Button>
 						</Stack>
 
@@ -206,6 +210,7 @@ const Signup = () => {
 						/>
 
 						<Button
+							type="submit"
 							sx={{
 								marginTop: "120px",
 								bgcolor: "#4682A9",
@@ -216,9 +221,6 @@ const Signup = () => {
 								fontSize: { lg: "3Opx", xs: "24px" },
 								height: "54px",
 								width: "100%",
-							}}
-							onClick={(e) => {
-								handleSubmit(e);
 							}}
 						>
 							Sign up

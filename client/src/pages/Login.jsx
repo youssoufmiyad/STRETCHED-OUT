@@ -1,5 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { Button, TextField, Stack, Link, Typography } from "@mui/material";
+import {
+	Button,
+	TextField,
+	Stack,
+	Link,
+	Typography,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
 
 import show from "../assets/icons/show.png";
@@ -7,8 +13,8 @@ import hide from "../assets/icons/hide.png";
 import encrypt from "../utils/encrypt";
 import { fetchUsers } from "../utils/fetchData";
 
-const Login = ({onLogin}) => {
-    const navigate = useNavigate();
+const Login = ({ onLogin }) => {
+	const navigate = useNavigate();
 
 	const [users, setUsers] = useState([]);
 
@@ -19,6 +25,10 @@ const Login = ({onLogin}) => {
 	useEffect(() => {
 		fetchUsers(setUsers);
 	});
+
+	useEffect(() => {
+		console.log(`email = ${email} password = ${password}`);
+	}, [email, password]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -38,8 +48,8 @@ const Login = ({onLogin}) => {
 		userExist ? console.log("user exist") : console.log("user doesn't exist");
 		if (encrypt(password) === actualUser.password) {
 			console.log("correct password");
-			onLogin(actualUser)
-            navigate("/")
+			onLogin(actualUser);
+			navigate("/");
 		} else {
 			console.log("incorrect password");
 		}
@@ -57,7 +67,11 @@ const Login = ({onLogin}) => {
 				marginTop: "5%",
 			}}
 		>
-			<form>
+			<form
+				onSubmit={(e) => {
+					handleSubmit(e);
+				}}
+			>
 				<TextField
 					type="email"
 					placeholder="type your email"
@@ -118,9 +132,7 @@ const Login = ({onLogin}) => {
 						height: "54px",
 						width: "100%",
 					}}
-					onClick={(e) => {
-						handleSubmit(e);
-					}}
+					type="submit"
 				>
 					Log In
 				</Button>
