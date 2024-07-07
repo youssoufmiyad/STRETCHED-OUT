@@ -4,7 +4,7 @@ import { Stack, Typography, Box } from "@mui/material";
 
 const RoutineCard = ({ routine }) => {
 	return (
-		<Link className="routine-card" to={`./routines/${routine.name}`}>
+		<Link className="routine-card" to={`../routines/${routine.name}`}>
 			<Box
 				sx={{
 					border: "4px #000 solid",

@@ -7,7 +7,6 @@ import Logo from "../assets/images/Logo.png";
 const Navbar = ({user, onDisconnect}) => {
 	const url = useLocation().pathname;
 	const urlHash = useLocation().hash;
-	// const user = useCookies(["stretchedUser"])
 	const [pos, setPos] = useState("");
 	useEffect(() => {
 		window.addEventListener("scroll", stickNavbar);
@@ -91,7 +90,7 @@ const Navbar = ({user, onDisconnect}) => {
 				</a>
 				{user ? (
 					<Link
-						to={`/profil/${user._id}`}
+						to={"../profil/"}
 						className={
 							(url === `/profil/${user._id}`) & (urlHash !== "#exercises")
 								? "actual-section"
@@ -119,7 +118,7 @@ const Navbar = ({user, onDisconnect}) => {
 			>
 				{!user ? (
 					<Link
-						to="/login"
+						to="../login"
 						className={url === "/login" ? "actual-section" : ""}
 						style={{
 							textDecoration: "none",
