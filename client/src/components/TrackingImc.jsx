@@ -17,7 +17,9 @@ const TrackingImc = () => {
 	const [hasRecord, setHasRecord] = useState(false);
 
 	useEffect(() => {
-		fetchUser(cookies.stretchedUser._id, setUser);
+		if (cookies.stretchedUser) {
+			fetchUser(cookies.stretchedUser._id, setUser);
+		}
 	}, [cookies]);
 
 	useEffect(() => {
