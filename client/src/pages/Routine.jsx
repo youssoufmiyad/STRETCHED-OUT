@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { fetchUser, getExerciseByName } from "../utils/fetchData";
+import { useParams } from "react-router-dom";
 
-const Routine = () => {
+const Routine = ({userId}) => {
 	const [exercises, setExercises] = useState([]);
 	const [user, setUser] = useState();
 	const [routine, setRoutine] = useState();
-	const { id, name } = useParams();
+	const { name } = useParams();
 
 	useEffect(() => {
-		fetchUser(id, setUser);
-	}, [id]);
+		fetchUser(userId, setUser);
+	}, [userId]);
 
 	useEffect(() => {
 		user
@@ -33,7 +33,7 @@ const Routine = () => {
 		console.log(exercises)
 	}, [exercises]);
 
-	return <div>{routine ? routine.exercises[0].name : ""}</div>;
+	return <div>{routine ? routine.exercises[0].name : "no routine"}</div>;
 };
 
 export default Routine;

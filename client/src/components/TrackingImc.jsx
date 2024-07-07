@@ -1,26 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useCookies } from "react-cookie";
 
 import { Stack, Typography, TextField, Button } from "@mui/material";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { fetchUser } from "../utils/fetchData";
 
-const TrackingImc = () => {
+const TrackingImc = ({user}) => {
 	const [startDate, setStartDate] = useState(new Date());
 	const [size, setSize] = useState();
 	const [weight, setWeight] = useState();
 
-	const [cookies] = useCookies(["stretchedUser"]);
 
-	const [user, setUser] = useState();
 	const [hasRecord, setHasRecord] = useState(false);
 
-	useEffect(() => {
-		if (cookies.stretchedUser) {
-			fetchUser(cookies.stretchedUser._id, setUser);
-		}
-	}, [cookies]);
 
 	useEffect(() => {
 		if (user) {

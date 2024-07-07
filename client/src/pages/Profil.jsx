@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { fetchUser } from "../utils/fetchData";
 import { Stack, Typography } from "@mui/material";
 import ProfilBanner from "../components/ProfilBanner";
@@ -7,13 +6,12 @@ import RoutineGrid from "../components/routineGrid";
 import CalculImc from "../components/CalculImc";
 import TrackingImc from "../components/TrackingImc";
 
-const Profil = () => {
+const Profil = ({userId}) => {
 	const [user, setUser] = useState();
-	const { id } = useParams();
 
 	useEffect(() => {
-		fetchUser(id, setUser);
-	}, [id]);
+		fetchUser(userId, setUser);
+	}, [userId]);
 	return (
 		<Stack sx={{ justifyContent: "center" }}>
 			<ProfilBanner user={user} />
@@ -36,7 +34,7 @@ const Profil = () => {
 			<br />
 			<Stack direction={"row"}>
 				<CalculImc />
-				<TrackingImc />
+				<TrackingImc user={user} />
 			</Stack>
 		</Stack>
 	);

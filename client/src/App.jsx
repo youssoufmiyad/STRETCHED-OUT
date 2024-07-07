@@ -38,13 +38,12 @@ const App = () => {
 			setExercises(exerciseData);
 		};
 		fetchExercisesData();
-		// console.log(cookies.stretchedUser)
 	}, []);
 
 	return (
 		<Box width="100%s" m="auto">
 			<CookiesProvider>
-				<Navbar user={cookies.stretchedUser} onDisconnect={handleDisconnect}/>
+				<Navbar user={cookies.stretchedUser} onDisconnect={handleDisconnect} />
 				<exercisesContext.Provider value={exercises}>
 					<Routes>
 						<Route path="/" element={<Home user={cookies.stretchedUser} />} />
@@ -60,8 +59,8 @@ const App = () => {
 							path="/new-routine"
 							element={<NewRoutine user={cookies.stretchedUser} />}
 						/>
-						<Route path="/profil/:id" element={<Profil />} />
-						<Route path="/profil/:id/routines/:name" element={<Routine />} />
+						<Route path="/profil/" element={<Profil userId={cookies.stretchedUser._id}/>} />
+						<Route path="/routines/:name" element={<Routine userId={cookies.stretchedUser._id}/>} />
 						<Route path="/login" element={<Login onLogin={handleLogin} />} />
 						<Route path="/signup" element={<Signup />} />
 					</Routes>
