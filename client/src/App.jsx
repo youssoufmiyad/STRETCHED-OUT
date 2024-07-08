@@ -59,8 +59,8 @@ const App = () => {
 							path="/new-routine"
 							element={<NewRoutine user={cookies.stretchedUser} />}
 						/>
-						<Route path="/profil/" element={<Profil userId={cookies.stretchedUser._id}/>} />
-						<Route path="/routines/:name" element={<Routine userId={cookies.stretchedUser._id}/>} />
+						<Route path="/profil/" element={<Profil userId={cookies.stretchedUser? cookies.stretchedUser._id:null}/>} />
+						<Route path="/routines/:name" element={<Routine userId={cookies.stretchedUser?cookies.stretchedUser._id:null}/>} />
 						<Route path="/login" element={<Login onLogin={handleLogin} />} />
 						<Route path="/signup" element={<Signup />} />
 					</Routes>
