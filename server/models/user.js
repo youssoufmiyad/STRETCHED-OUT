@@ -13,6 +13,11 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	activated:{
+		type: Boolean,
+		required: true,
+		default : 0,
+	},
 	routine: [
 		{
 			name: { type: String },
