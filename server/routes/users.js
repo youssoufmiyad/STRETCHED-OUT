@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/user");
+const { sendConfirmationMail } = require("../models/mail");
 
 // LOGIN
 // GET tout les users puis vérifie la présence de celui du req
@@ -30,6 +31,7 @@ router.post("/", async (req, res) => {
 	console.log(user.password);
 	try {
 		const newUser = await user.save();
+		sendConfirmationMail(user.email)
 		res.status(201).json(newUser);
 	} catch (err) {
 		res.status(400).json({ message: err.message });
@@ -53,7 +55,7 @@ router.patch("/:id", getUser, async (req, res) => {
 	if (req.body.measurements != null) {
 		res.user.measurements = req.body.measurements;
 	}
-	if(req.body.activated != null){
+	if (req.body.activated != null) {
 		res.user.activated = req.body.activated;
 	}
 	try {
@@ -122,7 +124,7 @@ router.post("/:id/addMeasurements", getUser, async (req, res) => {
 
 	try {
 		await res.user.save();
-		return res.status(200).json({message: "Measure successfully added !"});
+		return res.status(200).json({ message: "Measure successfully added !" });
 	} catch (err) {
 		return res.status(500).json({ message: err.message });
 	}
