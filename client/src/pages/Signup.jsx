@@ -33,7 +33,7 @@ const Signup = () => {
 	const [matchPasswordErrorMessage, setMatchPasswordErrorMessage] =
 		useState("");
 
-	const [success, setSuccess] = useState(false);
+	const [success, setSuccess] = useState(true);
 
 	const POSTREQUEST = async () => {
 		const hashPWD = encrypt(password);
@@ -47,7 +47,7 @@ const Signup = () => {
 			}),
 		};
 		const response = await fetch("http://localhost:3000/users", requestOptions);
-		return await response.json();
+		console.log(await response.json());
 	};
 
 	useEffect(() => {
@@ -78,8 +78,12 @@ const Signup = () => {
 	}, [matchPwd, validMatch, password]);
 
 	const handleSubmit = async (e) => {
+		console.log("SUBMIT");
 		e.preventDefault();
-
+		setEmailErrorMessage("");
+		setPasswordErrorMessage("");
+		setUsernameErrorMessage("");
+		setMatchPasswordErrorMessage("");
 		// if button enabled with JS hack
 		const v1 = EMAIL_REGEX.test(email);
 		const v2 = PWD_REGEX.test(password);
@@ -109,113 +113,81 @@ const Signup = () => {
 			setMatchPasswordErrorMessage("Password doesnt match");
 			setSuccess(false);
 		}
-		if (!success) {
+
+		if (success === true) {
+			console.log(`user = ${email} pwd = ${password}`);
+			console.log("data transmission starts...");
+			POSTREQUEST();
+			console.log("request sent");
+			navigate("/");
+		} else {
 			return;
 		}
-
-		console.log(`user = ${email} pwd = ${password}`);
-		console.log("data transmission starts...");
-		// When a post request is sent to the create url, we'll add a new account to the database.
-		POSTREQUEST();
-		console.log("request sent");
-		navigate("/");
 	};
 
 	return (
-		<>
-			<Stack
-				p="64px"
-				sx={{
-					backgroundColor: "#F6F4EB",
-					width: { lg: "25%", xs: "50%" },
-					marginLeft: { lg: "40%", xs: "28%" },
-					marginBottom: { lg: "10%", xs: "20%" },
-					marginTop: "5%",
+		<Stack
+			p="64px"
+			sx={{
+				backgroundColor: "#F6F4EB",
+				width: { lg: "25%", xs: "50%" },
+				marginLeft: { lg: "40%", xs: "28%" },
+				marginBottom: { lg: "10%", xs: "20%" },
+				marginTop: "5%",
+			}}
+		>
+			<form
+				onSubmit={(e) => {
+					handleSubmit(e);
 				}}
 			>
-				<form
-					onSubmit={(e) => {
-						handleSubmit(e);
+				<TextField
+					type={"text"}
+					placeholder="type your username"
+					id="username"
+					name="username"
+					onChange={(e) => {
+						setUsername(e.target.value);
 					}}
-				>
-					<TextField
-						type={"text"}
-						placeholder="type your username"
-						id="username"
-						name="username"
-						onChange={(e) => {
-							setUsername(e.target.value);
-						}}
-						error={usernameErrorMessage.length > 1 ? true : false}
-						helperText={usernameErrorMessage}
-						sx={{
-							width: "100%",
-							marginTop: "64px",
-							fontFamily: "Spartan",
-							fontSize: { lg: "3Opx", xs: "24px" },
-						}}
-					/>
+					error={usernameErrorMessage.length > 1 ? true : false}
+					helperText={usernameErrorMessage}
+					sx={{
+						width: "100%",
+						marginTop: "64px",
+						fontFamily: "Spartan",
+						fontSize: { lg: "3Opx", xs: "24px" },
+					}}
+				/>
 
-					<TextField
-						type="email"
-						placeholder="type your email"
-						id="email"
-						name="email"
-						onChange={(e) => {
-							setEmail(e.target.value);
-						}}
-						error={emailErrorMessage.length > 1 ? true : false}
-						helperText={emailErrorMessage}
-						sx={{
-							width: "100%",
-							marginTop: "64px",
-							fontFamily: "Spartan",
-							fontSize: { lg: "3Opx", xs: "24px" },
-						}}
-					/>
+				<TextField
+					type="email"
+					placeholder="type your email"
+					id="email"
+					name="email"
+					onChange={(e) => {
+						setEmail(e.target.value);
+					}}
+					error={emailErrorMessage.length > 1 ? true : false}
+					helperText={emailErrorMessage}
+					sx={{
+						width: "100%",
+						marginTop: "64px",
+						fontFamily: "Spartan",
+						fontSize: { lg: "3Opx", xs: "24px" },
+					}}
+				/>
 
-					<Stack direction="row">
-						<TextField
-							type={showPassword ? "text" : "password"}
-							placeholder="type your password"
-							id="password"
-							name="password"
-							onChange={(e) => {
-								setPassword(e.target.value);
-							}}
-							error={passwordErrorMessage  ? true : false}
-							helperText={passwordErrorMessage}
-							sx={{
-								width: "100%",
-								marginTop: "64px",
-								fontFamily: "Spartan",
-								fontSize: { lg: "3Opx", xs: "24px" },
-							}}
-						/>
-
-						<Button
-							sx={{ height: "20px", marginTop: "72px" }}
-							onClick={() => {
-								setShowPassword((prev) => !prev);
-							}}
-						>
-							<img
-								src={showPassword ? show : hide}
-								alt={showPassword ? "show password" : "hide password"}
-							/>
-						</Button>
-					</Stack>
-
+				<Stack direction="row">
 					<TextField
 						type={showPassword ? "text" : "password"}
-						placeholder="confirm your password"
+						placeholder="type your password"
 						id="password"
 						name="password"
 						onChange={(e) => {
-							setMatchPwd(e.target.value);
+							setPassword(e.target.value);
 						}}
-						error={matchPasswordErrorMessage.length > 1 ? true : false}
-						helperText={matchPasswordErrorMessage}
+						error={passwordErrorMessage ? true : false}
+						helperText={passwordErrorMessage}
 						sx={{
 							width: "100%",
 							marginTop: "64px",
@@ -225,39 +197,69 @@ const Signup = () => {
 					/>
 
 					<Button
-						type="submit"
-						sx={{
-							marginTop: "120px",
-							bgcolor: "#4682A9",
-							color: "#000",
-							textTransform: "none",
-							fontWeight: "700",
-							fontFamily: "Spartan",
-							fontSize: { lg: "3Opx", xs: "24px" },
-							height: "54px",
-							width: "100%",
+						sx={{ height: "20px", marginTop: "72px" }}
+						onClick={() => {
+							setShowPassword((prev) => !prev);
 						}}
 					>
-						Sign up
+						<img
+							src={showPassword ? show : hide}
+							alt={showPassword ? "show password" : "hide password"}
+						/>
 					</Button>
-				</form>
+				</Stack>
 
-				<Link
-					underline="none"
-					color="ButtonHighlight"
-					style={{
-						textDecoration: "none",
-						color: "#000000",
-						fontSize: "12px",
+				<TextField
+					type={showPassword ? "text" : "password"}
+					placeholder="confirm your password"
+					id="password"
+					name="password"
+					onChange={(e) => {
+						setMatchPwd(e.target.value);
+					}}
+					error={matchPasswordErrorMessage.length > 1 ? true : false}
+					helperText={matchPasswordErrorMessage}
+					sx={{
+						width: "100%",
+						marginTop: "64px",
+						fontFamily: "Spartan",
+						fontSize: { lg: "3Opx", xs: "24px" },
+					}}
+				/>
+
+				<Button
+					type="submit"
+					sx={{
+						marginTop: "120px",
+						bgcolor: "#4682A9",
+						color: "#000",
+						textTransform: "none",
 						fontWeight: "700",
+						fontFamily: "Spartan",
+						fontSize: { lg: "3Opx", xs: "24px" },
+						height: "54px",
+						width: "100%",
 					}}
 				>
-					<Typography>
-						Already have an account ? <a href="login">Log in</a>
-					</Typography>
-				</Link>
-			</Stack>
-		</>
+					Sign up
+				</Button>
+			</form>
+
+			<Link
+				underline="none"
+				color="ButtonHighlight"
+				style={{
+					textDecoration: "none",
+					color: "#000000",
+					fontSize: "12px",
+					fontWeight: "700",
+				}}
+			>
+				<Typography>
+					Already have an account ? <a href="login">Log in</a>
+				</Typography>
+			</Link>
+		</Stack>
 	);
 };
 
