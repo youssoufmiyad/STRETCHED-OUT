@@ -92,7 +92,7 @@ const Navbar = ({user, onDisconnect}) => {
 					<Link
 						to={"../profil/"}
 						className={
-							(url === `/profil/${user._id}`) & (urlHash !== "#exercises")
+							(url === "/profil/") & (urlHash !== "#exercises")
 								? "actual-section"
 								: ""
 						}
