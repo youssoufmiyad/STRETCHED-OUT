@@ -1,5 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { Button, TextField, Stack, Link, Typography } from "@mui/material";
+import {
+	Button,
+	TextField,
+	Stack,
+	Link,
+	Typography,
+	Checkbox,
+	FormControlLabel,
+} from "@mui/material";
 import React, { useState, useEffect } from "react";
 
 import show from "../assets/icons/show.png";
@@ -18,6 +26,8 @@ const Login = ({ onLogin }) => {
 
 	const [errorMessage, setErrorMessage] = useState("");
 
+	const [isChecked, setIsChecked] = useState(false);
+
 	useEffect(() => {
 		fetchUsers(setUsers);
 	});
@@ -25,6 +35,10 @@ const Login = ({ onLogin }) => {
 	useEffect(() => {
 		console.log(`email = ${email} password = ${password}`);
 	}, [email, password]);
+
+	useEffect(() => {
+		console.log(isChecked);
+	}, [isChecked]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -45,7 +59,7 @@ const Login = ({ onLogin }) => {
 			setErrorMessage("adress or password incorrect");
 		} else if (encrypt(password) === actualUser.password) {
 			setErrorMessage("");
-			onLogin(actualUser);
+			onLogin(actualUser, isChecked);
 			navigate("/");
 		} else {
 			setErrorMessage("adress or password incorrect");
@@ -119,10 +133,21 @@ const Login = ({ onLogin }) => {
 						/>
 					</Button>
 				</Stack>
+				<br />
+				<FormControlLabel
+					control={
+						<Checkbox
+							onChange={() => {
+								setIsChecked(!isChecked);
+							}}
+						/>
+					}
+					label="Se souvenir de moi"
+				/>
 
 				<Button
 					sx={{
-						marginTop: "212px",
+						marginTop: "194px",
 						bgcolor: "#4682A9",
 						color: "#000",
 						textTransform: "none",

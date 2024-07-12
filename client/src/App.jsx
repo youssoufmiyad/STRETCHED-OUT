@@ -17,6 +17,7 @@ import Profil from "./pages/Profil";
 import { CookiesProvider, useCookies } from "react-cookie";
 import { fetchExercises } from "./utils/fetchData";
 import Routine from "./pages/Routine";
+import AccountActivation from "./pages/AccountActivation";
 
 export const exercisesContext = createContext();
 
@@ -24,8 +25,14 @@ const App = () => {
 	const [cookies, setCookie] = useCookies(["stretchedUser"]);
 	const [exercises, setExercises] = useState([]);
 
-	const handleLogin = (user) => {
-		setCookie("stretchedUser", user, { path: "/" });
+	const handleLogin = (user, remembers) => {
+		const todayDate = new Date();
+		const tommorowDate = new Date();
+		tommorowDate.setDate(todayDate.getDate() + 1);
+
+		remembers === true
+			? setCookie("stretchedUser", user, { path: "/" })
+			: setCookie("stretchedUser", user, { path: "/", expires: tommorowDate });
 	};
 
 	const handleDisconnect = () => {
@@ -59,10 +66,29 @@ const App = () => {
 							path="/new-routine"
 							element={<NewRoutine user={cookies.stretchedUser} />}
 						/>
-						<Route path="/profil/" element={<Profil userId={cookies.stretchedUser? cookies.stretchedUser._id:null}/>} />
-						<Route path="/routines/:name" element={<Routine userId={cookies.stretchedUser?cookies.stretchedUser._id:null}/>} />
+						<Route
+							path="/profil/"
+							element={
+								<Profil
+									userId={
+										cookies.stretchedUser ? cookies.stretchedUser._id : null
+									}
+								/>
+							}
+						/>
+						<Route
+							path="/routines/:name"
+							element={
+								<Routine
+									userId={
+										cookies.stretchedUser ? cookies.stretchedUser._id : null
+									}
+								/>
+							}
+						/>
 						<Route path="/login" element={<Login onLogin={handleLogin} />} />
 						<Route path="/signup" element={<Signup />} />
+						<Route path="/confirmation" element={<AccountActivation />} />
 					</Routes>
 				</exercisesContext.Provider>
 			</CookiesProvider>
