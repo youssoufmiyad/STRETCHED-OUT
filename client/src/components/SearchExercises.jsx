@@ -13,8 +13,12 @@ const SearchExercises = ({ setExercices, equipment, setEquipment }) => {
 				"https://exercisedb.p.rapidapi.com/exercises/equipmentList",
 				exerciseOptions,
 			);
-
-			setEquipments(["all", ...equipmentData]);
+			if (
+				equipmentData.message !==
+				"You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https://rapidapi.com/justin-WFnsXH_t6/api/exercisedb"
+			) {
+				setEquipments(["all", ...equipmentData]);
+			}
 		};
 
 		fetchExercisesData();

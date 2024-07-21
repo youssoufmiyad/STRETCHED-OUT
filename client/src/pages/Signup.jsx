@@ -119,7 +119,7 @@ const Signup = () => {
 			console.log("data transmission starts...");
 			POSTREQUEST();
 			console.log("request sent");
-			navigate("/");
+			// navigate("/");
 		} else {
 			return;
 		}

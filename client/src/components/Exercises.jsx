@@ -38,14 +38,18 @@ const Exercises = () => {
 	}, []);
 
 	useEffect(() => {
-		if ((equipment === "") | (equipment === "all") | (equipment === "exercises")) {
+		if (
+			(equipment === "") |
+			(equipment === "all") |
+			(equipment === "exercises")
+		) {
 			setDisplayedExercises(exercises);
 		} else {
 			exercises.map((exercise) => {
 				if (exercise.equipment === equipment) {
 					console.log("exercise :");
 					console.log(exercise);
-					setDisplayedExercises(oldArray  => [...oldArray , exercise]);
+					setDisplayedExercises((oldArray) => [...oldArray, exercise]);
 				}
 			});
 		}
@@ -53,9 +57,12 @@ const Exercises = () => {
 
 	useEffect(() => {
 		displayedExercises
-			? setCurrentExercises(
-					displayedExercises.slice(indexOfFirstExercise, indexOfLastExercise),
-			  )
+			? displayedExercises.message ===
+			  "You have exceeded the MONTHLY quota for Requests on your current plan, BASIC. Upgrade your plan at https://rapidapi.com/justin-WFnsXH_t6/api/exercisedb"
+				? console.log("API expired :(")
+				: setCurrentExercises(
+						displayedExercises.slice(indexOfFirstExercise, indexOfLastExercise),
+				  )
 			: false;
 	}, [displayedExercises, indexOfFirstExercise, indexOfLastExercise]);
 
@@ -77,9 +84,11 @@ const Exercises = () => {
 			>
 				<ScrollMenu>
 					{currentExercises
-						? currentExercises.map((exercise, idx) => (
-								<ExerciseCard exercise={exercise} />
-						  ))
+						? currentExercises.message
+							? console.log("API expired :(")
+							: currentExercises.map((exercise, idx) => (
+									<ExerciseCard exercise={exercise} />
+							  ))
 						: false}
 				</ScrollMenu>
 				<Stack>

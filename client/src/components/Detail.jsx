@@ -22,6 +22,9 @@ const Detail = ({ exerciseDetail }) => {
             name: equipment,
         },
     ];
+
+    console.log("detail : ")
+    console.log(extraDetail)
     return (
         <Stack>
             <Stack flexDirection="row" gap="60px" sx={{ p: '20px', backgroundColor: "#749BC2" }}>

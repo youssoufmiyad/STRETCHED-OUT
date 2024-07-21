@@ -46,6 +46,7 @@ export const fetchExercises = async () => {
 };
 
 export const getExerciseByName = async (name) => {
+	console.log(`name : ${name}`)
 	const exercisesDetailData = await fetch(
 		`https://exercisedb.p.rapidapi.com/exercises/name/${name}?offset=0&limit=10`,
 		exerciseOptions,

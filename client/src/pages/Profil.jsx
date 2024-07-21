@@ -7,8 +7,10 @@ import CalculImc from "../components/CalculImc";
 import TrackingImc from "../components/TrackingImc";
 
 const Profil = ({userId}) => {
+	if (userId === null) {
+		window.location.replace("../")
+	}
 	const [user, setUser] = useState();
-
 	useEffect(() => {
 		fetchUser(userId, setUser);
 	}, [userId]);
