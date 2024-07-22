@@ -5,7 +5,7 @@ import BodyPartPNG from "../assets/icons/body-part.png"
 import TargetPNG from "../assets/icons/target.png"
 import EquipmentPNG from "../assets/icons/equipment.png"
 
-const Detail = ({ exerciseDetail }) => {
+const Detail = ({ exerciseDetail, flexDirection="row" }) => {
     const { bodyPart, equipment, gifUrl, name, target, instructions } = exerciseDetail;
 
     const extraDetail = [
@@ -27,7 +27,7 @@ const Detail = ({ exerciseDetail }) => {
     console.log(extraDetail)
     return (
         <Stack>
-            <Stack flexDirection="row" gap="60px" sx={{ p: '20px', backgroundColor: "#749BC2" }}>
+            <Stack flexDirection={flexDirection} gap="60px" sx={{ p: '20px', backgroundColor: "#749BC2" }}>
                 <img src={gifUrl} alt={name} loading="lazy" style={{ borderRadius: "20px", outline: "10px solid #000000", width: "600px", height: "600px" }} />
                 <Typography sx={{ fontSize: { lg: '64px', xs: '30px' }, fontFamily: "Spartan", fontWeight: "bold" }} textTransform="uppercase" variant='h3'>
                     {name}<br /><br />

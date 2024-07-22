@@ -31,8 +31,13 @@ const Routine = ({ userId }) => {
 	return (
 		<Box>
 			{exercises
-				? exercises.map((exercise) => {
-					return <Detail exerciseDetail={exercise[0]} />;
+				? exercises.map((exercise, idx) => {
+						return (
+							<Detail
+								exerciseDetail={exercise[0]}
+								flexDirection={idx % 2 === 0 ? "row" : "row-reverse"}
+							/>
+						);
 				  })
 				: null}
 		</Box>
