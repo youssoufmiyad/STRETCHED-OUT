@@ -46,13 +46,32 @@ export const fetchExercises = async () => {
 };
 
 export const getExerciseByName = async (name) => {
-	console.log(`name : ${name}`)
-	const exercisesDetailData = await fetch(
-		`https://exercisedb.p.rapidapi.com/exercises/name/${name.replace("%20", " ").replace("/", " ")}?offset=0&limit=10`,
+	console.log(`name : ${name}`);
+	if (!name.includes("/")) {
+		console.log("doesnt include /");
+		const exerciseDetailData = await fetch(
+			`https://exercisedb.p.rapidapi.com/exercises/name/${name.replace(
+				"%20",
+				" ",
+			)}?offset=0&limit=10`,
+			exerciseOptions,
+		);
+		return await exerciseDetailData.json();
+	}
+	console.log("includes /");
+	const exerciseDetailData = await fetch(
+		`https://exercisedb.p.rapidapi.com/exercises/name/${name.split("/")[0]}`,
 		exerciseOptions,
 	);
-	const data = await exercisesDetailData.json();
-	return data;
+	const exercices = await exerciseDetailData.json();
+	console.log(exercices);
+	for (let i = 0; i < exercices.length; i++) {
+		console.log(`exercise name : ${exercices[i].name}, name : ${name}`);
+		console.log(exercices[i])
+		if (exercices[i].name === name) {
+			return exercices[i];
+		}
+	}
 };
 
 export const fetchUser = async (id, setUser) => {
