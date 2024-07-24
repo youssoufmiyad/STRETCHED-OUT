@@ -18,6 +18,8 @@ const Routine = ({ userId }) => {
 			? user.routine.map((routine) => {
 					if (routine.name === name) {
 						routine.exercises.map(async (exercise) => {
+							console.log("EXERCISE : ");
+							console.log(await getExerciseByName(exercise.name));
 							setExercises([
 								...exercises,
 								await getExerciseByName(exercise.name),
@@ -32,9 +34,12 @@ const Routine = ({ userId }) => {
 		<Box>
 			{exercises
 				? exercises.map((exercise, idx) => {
+						console.log(`idx : ${idx}`);
+						console.log("EXOOOOOOOOOOOOO : ")
+						console.log(exercise)
 						return (
 							<Detail
-								exerciseDetail={exercise[0]}
+								exerciseDetail={!exercise.name  ? exercise[0] : exercise}
 								flexDirection={idx % 2 === 0 ? "row" : "row-reverse"}
 							/>
 						);

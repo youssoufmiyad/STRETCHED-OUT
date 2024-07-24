@@ -6,6 +6,11 @@ import TargetPNG from "../assets/icons/target.png"
 import EquipmentPNG from "../assets/icons/equipment.png"
 
 const Detail = ({ exerciseDetail, flexDirection="row" }) => {
+    console.log("DETAILS : ")
+    console.log(exerciseDetail)
+    if (exerciseDetail !== undefined){
+        
+    }
     const { bodyPart, equipment, gifUrl, name, target, instructions } = exerciseDetail;
 
     const extraDetail = [
