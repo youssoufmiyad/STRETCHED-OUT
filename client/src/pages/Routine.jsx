@@ -14,20 +14,17 @@ const Routine = ({ userId }) => {
 	}, [userId]);
 
 	useEffect(() => {
-		user
-			? user.routine.map((routine) => {
-					if (routine.name === name) {
-						routine.exercises.map(async (exercise) => {
-							console.log("EXERCISE : ");
-							console.log(await getExerciseByName(exercise.name));
-							setExercises([
-								...exercises,
-								await getExerciseByName(exercise.name),
-							]);
-						});
-					}
-			  })
-			: null;
+		if (user) {
+			const exercises_from_routine = [];
+			user.routine.map((routine) => {
+				if (routine.name === name) {
+					routine.exercises.map(async (exercise) => {
+						exercises_from_routine.push(await getExerciseByName(exercise.name));
+					});
+					setExercises(exercises_from_routine);
+				}
+			});
+		}
 	}, [user, name]);
 
 	return (
@@ -35,11 +32,11 @@ const Routine = ({ userId }) => {
 			{exercises
 				? exercises.map((exercise, idx) => {
 						console.log(`idx : ${idx}`);
-						console.log("EXOOOOOOOOOOOOO : ")
-						console.log(exercise)
+						console.log("EXOOOOOOOOOOOOO : ");
+						console.log(exercise);
 						return (
 							<Detail
-								exerciseDetail={!exercise.name  ? exercise[0] : exercise}
+								exerciseDetail={!exercise.name ? exercise[0] : exercise}
 								flexDirection={idx % 2 === 0 ? "row" : "row-reverse"}
 							/>
 						);
