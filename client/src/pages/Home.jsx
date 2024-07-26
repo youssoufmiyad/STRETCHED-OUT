@@ -16,6 +16,7 @@ const Home = ({ user }) => {
 				setExercices={setExercices}
 				equipment={equipement}
 				setEquipment={setEquipment}
+				exercises={exercises}
 			/>
 			<Exercises
 				setExercices={setExercices}
