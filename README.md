@@ -25,6 +25,9 @@ je la développe à titre éducatif dans mon temps libre (pour l'instant).
 - Suivi de l'IMC :construction:
 - Version mobile :hourglass_flowing_sand:
 
+![Page de demonstration d'exercice](screenshots/exerciseDetail.png)
+
+
 ## Lancement
 > [!NOTE]
 > L'application étant en early stage, je ne l'ai pas encore déployé proprement. C'est prévu.
