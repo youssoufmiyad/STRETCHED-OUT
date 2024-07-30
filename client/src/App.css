@@ -1,13 +1,12 @@
 body {
-  font-family: 'Josefin Sans';
-  background-color: #91C8E4;
+  font-family: "Josefin Sans";
+  background-color: #91c8e4;
 }
 
 * {
   padding: 0px;
   margin: 0px;
   box-sizing: border-box;
-
 }
 
 ::-webkit-scrollbar {
@@ -23,7 +22,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #FF2625;
+  color: #ff2625;
   font-size: 25px;
   border-radius: 4px;
   position: absolute;
@@ -49,7 +48,6 @@ body {
   flex-wrap: wrap;
 }
 
-
 .hero-banner-img {
   position: absolute;
   right: -15px;
@@ -57,7 +55,6 @@ body {
   width: 540px;
   height: 800px;
   margin-top: -160px;
-
 }
 
 .exercise-card {
@@ -84,8 +81,8 @@ body {
   border-top-left-radius: 20px;
 }
 
-.exercise-card:hover{
-  background-color: #FDEB87;
+.exercise-card:hover {
+  background-color: #fdeb87;
 }
 
 .equipment-card {
@@ -97,11 +94,11 @@ body {
 
 .equipment-card:hover {
   transform: scale(1.1, 1.1);
-  background-color: #FDEB87;
+  background-color: #fdeb87;
 }
 
 .search-btn:hover {
-  background-color: #FDEB87;
+  background-color: #fdeb87;
 }
 
 .exercise-video {
@@ -113,12 +110,10 @@ body {
   text-decoration: none;
 }
 
-
-
 .instructions {
   font-size: 1rem;
   border-radius: 0.5rem;
-  background: #F4C111;
+  background: #f4c111;
   color: #000;
   padding: 0.25rem;
   position: relative;
@@ -135,20 +130,20 @@ body {
 }
 
 .valid {
-color: limegreen;
-margin-left: 0.25rem;
+  color: limegreen;
+  margin-left: 0.25rem;
 }
 
 .hide {
-display: none;
+  display: none;
 }
 
 .errmsg {
-background-color: lightpink;
-color: firebrick;
-font-weight: bold;
-padding: 0.5rem;
-margin-bottom: 0.5rem;
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .sticky-nav {
@@ -157,17 +152,22 @@ margin-bottom: 0.5rem;
   left: 0;
 }
 
-.actual-section{
+.actual-section {
   border-bottom: 4px solid #000;
 }
 
+.search-card-img{
+  margin-left: 1rem;
+  border: #000 1px solid;
+  height: 80px;
+  width: 80px;
+}
 
-@media screen and (max-width:1200px) {
+@media screen and (max-width: 1200px) {
   .detail-image {
     width: 300px;
     height: 300px;
   }
-
 
   .react-horizontal-scrolling-menu--scroll-container {
     width: 500px;
@@ -190,11 +190,9 @@ margin-bottom: 0.5rem;
     width: 320px;
     height: 300px;
   }
-
 }
 
-
-@media screen and (max-width:400px) {
+@media screen and (max-width: 400px) {
   .exercise-card {
     width: 280px;
   }
@@ -203,17 +201,17 @@ margin-bottom: 0.5rem;
 @font-face {
   font-family: "Siegra";
   src: local("SiegraRegular-qZ465"),
-  url("./assets/fonts/SiegraRegular-qZ465.ttf") format("truetype");
+    url("./assets/fonts/SiegraRegular-qZ465.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Spartan";
   src: local("leaguespartan-bold"),
-  url("./assets/fonts/leaguespartan-bold.ttf") format("truetype");
+    url("./assets/fonts/leaguespartan-bold.ttf") format("truetype");
 }
 
 @font-face {
   font-family: "Sportage";
   src: local("SportageDemoitalic-p735r"),
-  url("./assets/fonts/SportageDemoitalic-p735r.otf") format("opentype")
+    url("./assets/fonts/SportageDemoitalic-p735r.otf") format("opentype");
 }

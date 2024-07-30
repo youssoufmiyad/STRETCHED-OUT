@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Box, Button, Stack, TextField, Typography } from "@mui/material";
 import HorizontalScrollbar from "./HorizontalScrollbar";
 import { exerciseOptions, fetchData } from "../utils/fetchData";
+import SearchCard from "./SearchCard";
+import { useContext } from "react";
+import { exercisesContext } from "../App";
 
 const SearchExercises = ({ setExercices, equipment, setEquipment }) => {
 	const [search, setSearch] = useState("");
 	const [equipments, setEquipments] = useState([]);
+	const exercises = useContext(exercisesContext);
 
 	useEffect(() => {
 		const fetchExercisesData = async () => {
@@ -57,7 +61,7 @@ const SearchExercises = ({ setExercices, equipment, setEquipment }) => {
 			>
 				Exercices
 			</Typography>
-			<Box position="relative" mb="72px">
+			<Box position="relative">
 				<TextField
 					sx={{
 						height: "54px",
@@ -91,7 +95,8 @@ const SearchExercises = ({ setExercices, equipment, setEquipment }) => {
 					onClick={() => handleSearch()}
 				>
 					Search
-				</Button>
+				</Button>{" "}
+				{exercises[6] ? <SearchCard exercise={exercises[6]} /> : false}
 			</Box>
 
 			<Box sx={{ position: "relative", width: "100%", p: "20px" }}>
